@@ -65,6 +65,16 @@
                     </a>
                 </li>
 
+                <li class="menu-title mt-2">สำหรับเข้าของ</li>
+
+                <li>
+                    <a href="admin_show.php">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span class="badge bg-success rounded-pill float-end">9+</span>
+                        <span>ข้อมูลผู้ดูแลระบบ</span>
+                    </a>
+                </li>
+
                 <li class="menu-title mt-2">Apps</li>
 
                 <li>

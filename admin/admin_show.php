@@ -24,13 +24,12 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">รายการข้อมูลผู้ดูแลระบบทั้งหมด
-                                        <a href="#" class="btn btn-success">
-                                            <i class="fa-regular fa-square-plus"></i>
-                                            เพื่มผู้ดูแลระบบ
-                                        </a>
-                                    </h4>
+                                    <h4 class="mt-0 header-title">รายการข้อมูลผู้ดูแลระบบทั้งหมด</h4>
                                     <hr>
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scrollable-modal">
+                                        <i class="fa-regular fa-square-plus"></i>
+                                        เพื่มผู้ดูแลระบบ
+                                    </button>
 
                                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap">
                                         <thead>
@@ -79,9 +78,10 @@
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
+                    <!-- Modal ของฟอร์ม Add Admin  -->
+                    <?php require_once("admin_add_form.php");?>
                 </div>
             </div>
             <!-- Footer Start -->

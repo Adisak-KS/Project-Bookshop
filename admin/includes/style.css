@@ -1,16 +1,24 @@
+/* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-
-/*
-    1. 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
-*/
+/********************************************************
+    1. ตั้งค่า Root เว็บไซต์
+    2. ตั้งค่าเว็บไซต์เบื้องต้น
+    3. Table
+********************************************************/
 
 
+
+
+/* 1. ตั้งค่า Root เว็บไซต์ */
 :root{
-    --font-family:"Sarabun", sans-serif;
+    --font-family:"Roboto","Sarabun", sans-serif;
 }
 
+
+/* 2. ตั้งค่าเว็บไซต์เบื้องต้น */
 *{
     font-family: var(--font-family);
 }
@@ -19,8 +27,10 @@ h1, h2, h3, h4, h5, h6{
     font-family: var(--font-family) !important;
 }
 
+
+/* 3. Table  */
 table{
-    max-width: 100% !important;
+    max-width: 100%;
 }
 
 th{
@@ -38,7 +48,8 @@ td .profile{
 }
 
 td > img{
-    max-width: 50%;
+    min-width: 50% !important;
+    max-width: 50% !important;
 }
 .profile{
     text-align: center !important;
