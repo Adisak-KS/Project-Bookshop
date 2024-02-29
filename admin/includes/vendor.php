@@ -39,7 +39,7 @@
 <script src="assets/js/app.min.js"></script>
 
 <!-- My Scripts -->
-<script src="includes/scripts.js"></script>
+<script src="assets/js/scripts.js"></script>
 
 
 

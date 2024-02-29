@@ -1,3 +1,9 @@
+<?php
+require_once("../db/connect.php");
+
+$result = $controller->showEmployees();
+// print_r($result);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,58 +36,68 @@
                                         <i class="fa-regular fa-square-plus"></i>
                                         เพื่มผู้ดูแลระบบ
                                     </button>
-
-                                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>รูป</th>
-                                                <th>ชื่อ-นามสกุล</th>
-                                                <th>ชื่อผู้ใช้</th>
-                                                <th>อีเมล</th>
-                                                <th>ระดับสิทธิ์</th>
-                                                <th>สถานะบัญชี</th>
-                                                <th>ดูรายละเอียด</th>
-                                                <th>แก้ไขข้อมูล</th>
-                                                <th>ลบข้อมูล</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td class="profile"><img src="assets/images/bg-auth3.png" alt="รูปผู้ดูแลระบบ"></td>
-                                                <td>Adisak Khongsuk</td>
-                                                <td>Edinburgh456</td>
-                                                <td>Edinburgh@gmail.com</td>
-                                                <td>Super Admin</td>
-                                                <td>Actived</td>
-                                                <td>
-                                                    <a href="#" class="btn btn-info">
-                                                        <i class="fa-solid fa-eye"></i>
-                                                        รายละเอียด
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-warning">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                        แก้ไข
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-danger">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                        ลบ
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <?php
+                                    if ($result && $result->rowCount() > 0) { // ตรวจสอบว่ามีข้อมูลหรือไม่
+                                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>รูป</th>
+                                                        <th>ชื่อ-นามสกุล</th>
+                                                        <th>ชื่อผู้ใช้</th>
+                                                        <th>อีเมล</th>
+                                                        <th>ระดับสิทธิ์</th>
+                                                        <th>สถานะบัญชี</th>
+                                                        <th>ดูรายละเอียด</th>
+                                                        <th>แก้ไขข้อมูล</th>
+                                                        <th>ลบข้อมูล</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><?php echo $row["emp_id"]; ?></td>
+                                                        <td class="profile"><?php $row["emp_profile"]; ?><img src="assets/images/bg-auth3.png" alt="รูปผู้ดูแลระบบ"></td>
+                                                        <td><?php echo $row["emp_fullname"]; ?></td>
+                                                        <td><?php echo $row["emp_username"]; ?></td>
+                                                        <td><?php echo $row["emp_email"]; ?></td>
+                                                        <td><?php echo $row["emp_authority_type_id"]; ?></td>
+                                                        <td><?php echo $row["status"]; ?></td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-info">
+                                                                <i class="fa-solid fa-eye"></i>
+                                                                รายละเอียด
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-warning">
+                                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                                แก้ไข
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-danger">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                                ลบ
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <!-- ไม่พบข้อมูล ให้แสดงแจ้งเตือน -->
+                                        <?php require_once("includes/alert_notfound.php"); ?>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Modal ของฟอร์ม Add Admin  -->
-                    <?php require_once("admin_add_form.php");?>
+                    <?php require_once("admin_add_form.php"); ?>
                 </div>
             </div>
             <!-- Footer Start -->

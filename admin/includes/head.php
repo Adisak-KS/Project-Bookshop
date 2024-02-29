@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="assets/css/app.min.css" id="app-style">
 
 <!-- My Style  -->
-<link rel="stylesheet" href="includes/style.css">
+<link rel="stylesheet" href="assets/css/style.css">
 
 <!-- icons -->
 <!-- <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" /> -->

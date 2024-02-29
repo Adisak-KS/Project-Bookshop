@@ -54,3 +54,8 @@ td > img{
 .profile{
     text-align: center !important;
 }
+        
+                       
+#icon-nodata{
+      font-size: 8em; /* ขยายขนาดให้ใหญ่ขึ้นอย่างละเอียด */
+}
