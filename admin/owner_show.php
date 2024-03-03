@@ -43,7 +43,7 @@ $result = $controller->getOwner();
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>รูป</th>
+                                                    <th>รูปผู้ใข้งาน</th>
                                                     <th>ชื่อ-นามสกุล</th>
                                                     <th>ชื่อผู้ใช้</th>
                                                     <th>อีเมล</th>
@@ -58,7 +58,7 @@ $result = $controller->getOwner();
                                                 <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <td><?php echo $row["emp_id"]; ?></td>
-                                                        <td class="profile"><img src="<?php echo $row["emp_profile"]; ?>" alt="รูปผู้ดูแลระบบ"></td>
+                                                        <td class="profile"><img src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>" alt="รูปเจ้าของ"></td>
                                                         <td><?php echo $row["emp_fullname"]; ?></td>
                                                         <td><?php echo $row["emp_username"]; ?></td>
                                                         <td><?php echo $row["emp_email"]; ?></td>
@@ -94,6 +94,7 @@ $result = $controller->getOwner();
                                             </tbody>
                                         </table>
                                     <?php } else { ?>
+                                        <!-- แสดง หน้าไม่มีข้อมูล  -->
                                         <?php require_once("includes/alert_notfound.php");?>
                                     <?php } ?>
                                 </div>

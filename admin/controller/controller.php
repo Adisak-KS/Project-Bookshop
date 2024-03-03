@@ -105,25 +105,26 @@ class Controller
             if ($check["count"] > 0) {
                 return false;
             } else {
+                // ข้อมูลเริ่มต้น
                 $empId = 1;
-                $empProfile = "./uploads/profile_employees/profile_default.png";
+                $empProfile = "uploads/profile_employees/profile_default.png";
                 $empFullname = "เจ้าของระบบ";
                 $empUsername = "Owner1";
-                $empPassword = "Owner_1";
+                $empPassword = "Owner_1"; // รหัสผ่านไม่ได้ถูกเข้ารหัสด้วย password_hash() ตรงนี้
                 $empEmail = "adisak.general@gmail.com";
                 $empTel = "0935797491";
                 $empAuthorityType = 1;
                 $empAuthorityTyp2 = 5;
 
-                // ไดเรกทอรีเก็บไฟล์
-                $uploadsDirectory = "../uploads/profile_employees/";
+                // Folder เก็บไฟล์
+                $uploadsDirectory = "uploads/profile_employees/";
 
-                // ตรวจสอบว่าไดเรกทอรีเก็บไฟล์มีอยู่หรือไม่ ถ้าไม่มีให้สร้างขึ้น
+                // ตรวจสอบว่ามี Folder เก็บไฟล์หรือไม่ ถ้าไม่มีให้สร้าง
                 if (!file_exists($uploadsDirectory)) {
                     mkdir($uploadsDirectory, 0777, true);
                 }
 
-                // ตรวจสอบว่าไฟล์ต้นฉบับมีอยู่หรือไม่
+                // ตรวจสอบว่าไฟล์ profile_default.png มีอยู่หรือไม่
                 if (!file_exists($empProfile)) {
                     echo "ไฟล์ต้นฉบับไม่พบ";
                     return false;
@@ -133,18 +134,19 @@ class Controller
                 $originalFileName = "profile_default.png";
 
                 // สุ่มชื่อใหม่
-                $newFileName = uniqid('profile_', true) . '.' . pathinfo($originalFileName, PATHINFO_EXTENSION);
+                $newProfile = uniqid('profile_', true) . '.' . pathinfo($originalFileName, PATHINFO_EXTENSION);
 
-                // สร้างเส้นทางใหม่สำหรับไฟล์ที่คัดลอกและเปลี่ยนชื่อ
-                $newProfile = $uploadsDirectory . $newFileName;
+                // ที่เก็บไฟล์ $newProfile
+                $pathNewProfile = $uploadsDirectory . $newProfile;
 
                 // คัดลอกไฟล์
-                if (copy($empProfile, $newProfile)) {
-                    // แก้ไขการเข้ารหัสรหัสผ่าน
+                if (copy($empProfile, $pathNewProfile)) {
+                    // Hash รหัสผ่าน
                     $hashedPassword = password_hash($empPassword, PASSWORD_DEFAULT);
 
+                    // เพิ่มข้อมูล Employee
                     $sql1 = "INSERT INTO bs_employees (emp_id, emp_profile, emp_fullname, emp_username, emp_password, emp_email, emp_tel)
-                            VALUES (:empId, :empProfile, :empFullname, :empUsername, :hashedPassword, :empEmail, :empTel)";
+                         VALUES (:empId, :empProfile, :empFullname, :empUsername, :hashedPassword, :empEmail, :empTel)";
                     $stmt1 = $this->db->prepare($sql1);
                     $stmt1->bindParam(':empId', $empId);
                     $stmt1->bindParam(':empProfile', $newProfile);
@@ -155,6 +157,7 @@ class Controller
                     $stmt1->bindParam(':empTel', $empTel);
                     $stmt1->execute();
 
+                    // เพิ่มสิทธิ์ Owner
                     $sql2 = "INSERT INTO bs_employees_authority (emp_id, emp_Authority_type_id)
                          VALUES (:empId, :empAuthorityTypeId)";
                     $stmt2 = $this->db->prepare($sql2);
@@ -162,12 +165,10 @@ class Controller
                     $stmt2->bindParam(':empAuthorityTypeId', $empAuthorityType);
                     $stmt2->execute();
 
-                    $sql3 = "INSERT INTO bs_employees_authority (emp_id, emp_Authority_type_id)
-                         VALUES (:empId, :empAuthorityTypeId)";
-                    $stmt3 = $this->db->prepare($sql3);
-                    $stmt3->bindParam(':empId', $empId);
-                    $stmt3->bindParam(':empAuthorityTypeId', $empAuthorityTyp2);
-                    $stmt3->execute();
+                    // เพิ่มสิทธิ์ Employee
+                    $stmt2->bindParam(':empId', $empId);
+                    $stmt2->bindParam(':empAuthorityTypeId', $empAuthorityTyp2);
+                    $stmt2->execute();
 
                     return true; // หลังจากการเพิ่มข้อมูลสำเร็จ
                 } else {
