@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6{
 
 /* 3. Table  */
 table{
-    max-width: 100%;
+    min-width: 100%;
 }
 
 th{
@@ -44,7 +44,7 @@ td{
 }
 
 td .profile{
-    max-width: 25%;
+    max-width: 10%;
 }
 
 td > img{

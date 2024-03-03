@@ -58,7 +58,7 @@ $result = $controller->getOwner();
                                                 <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <td><?php echo $row["emp_id"]; ?></td>
-                                                        <td class="profile"><img src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>" alt="รูปผู้ดูแลระบบ"></td>
+                                                        <td class="profile"><img src="<?php echo $row["emp_profile"]; ?>" alt="รูปผู้ดูแลระบบ"></td>
                                                         <td><?php echo $row["emp_fullname"]; ?></td>
                                                         <td><?php echo $row["emp_username"]; ?></td>
                                                         <td><?php echo $row["emp_email"]; ?></td>

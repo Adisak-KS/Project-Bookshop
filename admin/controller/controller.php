@@ -81,4 +81,102 @@ class Controller
             return false;
         }
     }
+
+    function checkOwnerDefault()
+    {
+        try {
+            $sql = "SELECT COUNT(*) as count FROM bs_employees_authority
+                    WHERE emp_authority_type_id = 1
+                    ";
+            $stmt = $this->db->query($sql);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function insertOwnerDefault()
+    {
+        try {
+            $check = $this->checkOwnerDefault();
+
+            if ($check["count"] > 0) {
+                return false;
+            } else {
+                $empId = 1;
+                $empProfile = "./uploads/profile_employees/profile_default.png";
+                $empFullname = "เจ้าของระบบ";
+                $empUsername = "Owner1";
+                $empPassword = "Owner_1";
+                $empEmail = "adisak.general@gmail.com";
+                $empTel = "0935797491";
+                $empAuthorityType = 1;
+                $empAuthorityTyp2 = 5;
+
+                // ไดเรกทอรีเก็บไฟล์
+                $uploadsDirectory = "../uploads/profile_employees/";
+
+                // ตรวจสอบว่าไดเรกทอรีเก็บไฟล์มีอยู่หรือไม่ ถ้าไม่มีให้สร้างขึ้น
+                if (!file_exists($uploadsDirectory)) {
+                    mkdir($uploadsDirectory, 0777, true);
+                }
+
+                // ตรวจสอบว่าไฟล์ต้นฉบับมีอยู่หรือไม่
+                if (!file_exists($empProfile)) {
+                    echo "ไฟล์ต้นฉบับไม่พบ";
+                    return false;
+                }
+
+                // ชื่อไฟล์ต้นฉบับ
+                $originalFileName = "profile_default.png";
+
+                // สุ่มชื่อใหม่
+                $newFileName = uniqid('profile_', true) . '.' . pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+                // สร้างเส้นทางใหม่สำหรับไฟล์ที่คัดลอกและเปลี่ยนชื่อ
+                $newProfile = $uploadsDirectory . $newFileName;
+
+                // คัดลอกไฟล์
+                if (copy($empProfile, $newProfile)) {
+                    // แก้ไขการเข้ารหัสรหัสผ่าน
+                    $hashedPassword = password_hash($empPassword, PASSWORD_DEFAULT);
+
+                    $sql1 = "INSERT INTO bs_employees (emp_id, emp_profile, emp_fullname, emp_username, emp_password, emp_email, emp_tel)
+                            VALUES (:empId, :empProfile, :empFullname, :empUsername, :hashedPassword, :empEmail, :empTel)";
+                    $stmt1 = $this->db->prepare($sql1);
+                    $stmt1->bindParam(':empId', $empId);
+                    $stmt1->bindParam(':empProfile', $newProfile);
+                    $stmt1->bindParam(':empFullname', $empFullname);
+                    $stmt1->bindParam(':empUsername', $empUsername);
+                    $stmt1->bindParam(':hashedPassword', $hashedPassword);
+                    $stmt1->bindParam(':empEmail', $empEmail);
+                    $stmt1->bindParam(':empTel', $empTel);
+                    $stmt1->execute();
+
+                    $sql2 = "INSERT INTO bs_employees_authority (emp_id, emp_Authority_type_id)
+                         VALUES (:empId, :empAuthorityTypeId)";
+                    $stmt2 = $this->db->prepare($sql2);
+                    $stmt2->bindParam(':empId', $empId);
+                    $stmt2->bindParam(':empAuthorityTypeId', $empAuthorityType);
+                    $stmt2->execute();
+
+                    $sql3 = "INSERT INTO bs_employees_authority (emp_id, emp_Authority_type_id)
+                         VALUES (:empId, :empAuthorityTypeId)";
+                    $stmt3 = $this->db->prepare($sql3);
+                    $stmt3->bindParam(':empId', $empId);
+                    $stmt3->bindParam(':empAuthorityTypeId', $empAuthorityTyp2);
+                    $stmt3->execute();
+
+                    return true; // หลังจากการเพิ่มข้อมูลสำเร็จ
+                } else {
+                    echo "เกิดข้อผิดพลาดในการคัดลอกไฟล์";
+                    return false;
+                }
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
