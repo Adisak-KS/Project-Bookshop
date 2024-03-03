@@ -12,7 +12,7 @@
                         <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>
                         <div class="invalid-feedback">
-                            กรุณาระบุ ชื่อ - นามสกุล
+                            <small>กรุณาระบุ ชื่อ - นามสกุล</small>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -21,7 +21,7 @@
                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                             <input type="text" class="form-control" name="emp_username" id="emp_username" placeholder="ระบุชื่อผู้ใช้ (Username) เช่น User_1" aria-describedby="inputGroupPrepend" maxlength="30" required>
                             <div class="invalid-feedback">
-                                กรุณาระบุ ชื่อผู้ใช้ (Username)
+                                <small>กรุณาระบุ ชื่อผู้ใช้ (Username)</small>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                                 <span class="password-eye"></span>
                             </div>
                             <div class="invalid-feedback">
-                                กรุณาระบุ รหัสผ่าน
+                               <small>กรุณาระบุ รหัสผ่าน</small>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                 <span class="password-eye"></span>
                             </div>
                             <div class="invalid-feedback">
-                                กรุณาระบุ รหัสผ่านอีกครั้ง
+                               <small>กรุณาระบุ รหัสผ่านอีกครั้ง</small>
                             </div>
                         </div>
                     </div>
@@ -53,20 +53,26 @@
                         <label for="emp_email" class="form-label">อีเมล<span class="text-danger">*</span></label>
                         <input type="email" class="form-control" name="emp_email" id="emp_email" placeholder="ระบุอีเมล เช่น example@gmail.com" maxlength="65" required>
                         <div class="invalid-feedback">
-                            กรุณาระบุ อีเมล
+                            <small>กรุณาระบุ อีเมล</small>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="emp_tel" class="form-label">เบอร์โทรศัพท์<span class="text-danger">*</span></label>
                         <input type="tel" class="form-control" name="emp_tel" id="emp_tel" placeholder="ระบุเบอร์โทรศัพท์ เช่น 0876543210" maxlength="10" required>
                         <div class="invalid-feedback">
-                            กรุณาระบุ เบอร์โทรศัพท์
+                            <small>กรุณาระบุ เบอร์โทรศัพท์</small>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                <button type="submit" name="submit" class="btn btn-success">บันทึก</button>
+                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-xmark"></i> 
+                    <span>ยกเลิก</span>
+                </button>
+                <button type="submit" name="submit" class="btn btn-success">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>บันทึก</span>
+                </button>
             </div>
             </form>
         </div><!-- /.modal-content -->

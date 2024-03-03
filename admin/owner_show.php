@@ -1,6 +1,7 @@
 <?php
 require_once("../db/connect.php");
 
+// แสดงพนักงานที่มีสิทธิ์ Owner
 $result = $controller->getOwner();
 // print_r($result);
 ?>
@@ -30,7 +31,7 @@ $result = $controller->getOwner();
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">รายการข้อมูลเจ้าของระบบ / ผู้บริหารทั้งหมด</h4>
+                                    <h4 class="mt-0 header-title">รายการข้อมูลเจ้าของระบบ / ผู้บริหาร ทั้งหมด</h4>
                                     <hr>
                                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scrollable-modal">
                                         <i class="fa-regular fa-square-plus"></i>
@@ -58,19 +59,29 @@ $result = $controller->getOwner();
                                                 <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <td><?php echo $row["emp_id"]; ?></td>
-                                                        <td class="profile"><img src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>" alt="รูปเจ้าของ"></td>
+                                                        <td class="profile">
+                                                            <img src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>" alt="รูปเจ้าของ">
+                                                        </td>
                                                         <td><?php echo $row["emp_fullname"]; ?></td>
                                                         <td><?php echo $row["emp_username"]; ?></td>
                                                         <td><?php echo $row["emp_email"]; ?></td>
                                                         <td>
                                                             <?php
-                                                            $authority_names = explode(",", $row["emp_authority_type_name"]);
-                                                            foreach ($authority_names as $typeName) { //หากมีสิทธิ์ > 1 ให้แสดงลูปแยกบรรทัด
-                                                                echo $typeName . "<br>";
-                                                            }
+                                                                $authority_names = explode(",", $row["emp_authority_type_name"]);
+                                                                foreach ($authority_names as $typeName) { //หากมีสิทธิ์ > 1 ให้แสดงลูปแยกบรรทัด
+                                                                    echo $typeName . "<br>";
+                                                                }
                                                             ?>
                                                         </td>
-                                                        <td><?php echo $row["status"]; ?></td>
+                                                        <td class="status">
+                                                            <?php
+                                                                if ($row["emp_status"] == "Activated") {
+                                                                    echo '<span class="badge bg-success">ACTIVATED</span>';
+                                                                } else if ($row["emp_status"] == "Blocked") {
+                                                                    echo '<span class="badge bg-danger">BLOCKED</span>';
+                                                                }
+                                                            ?>
+                                                        </td>
                                                         <td>
                                                             <a href="#" class="btn btn-info">
                                                                 <i class="fa-solid fa-eye"></i>
@@ -95,7 +106,7 @@ $result = $controller->getOwner();
                                         </table>
                                     <?php } else { ?>
                                         <!-- แสดง หน้าไม่มีข้อมูล  -->
-                                        <?php require_once("includes/alert_notfound.php");?>
+                                        <?php require_once("includes/alert_notfound.php"); ?>
                                     <?php } ?>
                                 </div>
                             </div>
