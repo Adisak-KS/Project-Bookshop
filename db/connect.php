@@ -16,6 +16,7 @@ try {
     // สร้าง object ของคลาส Controller ด้วย connection object
     $controller = new Controller($conn);
     $controller->insertEmpAuthorityTypeDefault();
+    // $controller->insertOwnerDefault();
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }

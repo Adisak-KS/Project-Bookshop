@@ -48,8 +48,7 @@ td .profile{
 }
 
 td > img{
-    min-width: 50% !important;
-    max-width: 50% !important;
+    max-width: 30% !important;
 }
 .profile{
     text-align: center !important;
@@ -57,5 +56,5 @@ td > img{
         
                        
 #icon-nodata{
-      font-size: 8em; /* ขยายขนาดให้ใหญ่ขึ้นอย่างละเอียด */
+      font-size: 5em; /* ขยายขนาดให้ใหญ่ขึ้นอย่างละเอียด */
 }

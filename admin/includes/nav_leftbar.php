@@ -65,13 +65,29 @@
                     </a>
                 </li>
 
-                <li class="menu-title mt-2">สำหรับเข้าของ</li>
+                <li class="menu-title mt-2">สำหรับเจ้าาของ</li>
 
+                <li>
+                    <a href="owner_show.php">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span class="badge bg-success rounded-pill float-end">9+</span>
+                        <span>ข้อมูลเจ้าของ</span>
+                    </a>
+                </li>
                 <li>
                     <a href="admin_show.php">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="badge bg-success rounded-pill float-end">9+</span>
                         <span>ข้อมูลผู้ดูแลระบบ</span>
+                    </a>
+                </li>
+
+                <li class="menu-title mt-2">กำหนดสิทธิ์</li>
+                <li>
+                    <a href="admin_show.php">
+                        <i class="mdi mdi-view-dashboard-outline"></i>
+                        <span class="badge bg-success rounded-pill float-end">9+</span>
+                        <span>สิทธิ์ผู้ดูแลระบบ</span>
                     </a>
                 </li>
 

@@ -13,7 +13,8 @@ class Controller
     {
         try {
             $sql = "SELECT * FROM bs_employees_authority_type
-                    WHERE emp_authority_type_name IN ('Owner', 'Admin', 'Accounting', 'Sale', 'Employee')";
+                    WHERE emp_authority_type_name IN ('Owner', 'Admin', 'Accounting', 'Sale', 'Employee')
+                   ";
             $stmt = $this->db->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -61,37 +62,23 @@ class Controller
         }
     }
 
-    // function checkOwnerDefault()
-    // {
-    //     try {
-    //         $sql = "SELECT * FROM bs_employees
-    //                 WHERE emp_username IN ('Owner1')";
-    //         $stmt = $this->db->query($sql);
-    //         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //     } catch (PDOException $e) {
-    //         echo $e->getMessage();
-    //         // หากเกิดข้อผิดพลาดส่งค่า false กลับ
-    //         return false;
-    //     }
-    // }
-    // function insertOwenrDefault()
-    // {
-    //     // ตรวจสอบประเภทสิทธิ์ว่ามีหรือไม่
-    //     $chkOwenerDefault = $this->checkOwnerDefault();
-    // }
-
-    function showEmployees()
+    function getOwner()
     {
         try {
-            $sql = "SELECT a.*, b.emp_authority_type_id
-                    FROM bs_employees a  
-                    INNER JOIN bs_employees_authority b
-                    ON a.emp_id = b.emp_id 
-                    WHERE a.emp_id = b.emp_id
-                    ";
+            // $sql = "SELECT a.*, GROUP_CONCAT(b.emp_authority_type_id) AS emp_authority_type_id
+            //     FROM bs_employees a
+            //     INNER JOIN bs_employees_authority b ON a.emp_id = b.emp_id
+            //     GROUP BY a.emp_id
+            //    ";
+            $sql = "SELECT a.*, GROUP_CONCAT(b.emp_authority_type_id) AS emp_authority_type_id, GROUP_CONCAT(c.emp_authority_type_name) AS emp_authority_type_name
+                    FROM bs_employees a
+                    INNER JOIN bs_employees_authority b ON a.emp_id = b.emp_id
+                    INNER JOIN bs_employees_authority_type c ON b.emp_authority_type_id = c.emp_authority_type_id
+                    GROUP BY a.emp_id";
             $stmt = $this->db->query($sql);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt;
         } catch (PDOException $e) {
+            return false;
         }
     }
 }
