@@ -7,7 +7,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="needs-validation" novalidate action="#" onsubmit="return chkFormUser();">
+                <!-- <form class="needs-validation" novalidate action="#" onsubmit="return chkFormEmployees();"> -->
+                
+                    <form action="owner_addphp" novalidate method="post"></form>
                     <div class="mb-3">
                         <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>

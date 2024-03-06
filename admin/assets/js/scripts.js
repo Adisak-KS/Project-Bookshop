@@ -159,7 +159,7 @@ function validateTel(tel) {
     return "";
 }
 
-function chkFormUser() {
+function chkFormEmployees() {
     const fullname = getValueById("emp_fullname");
     const username = getValueById("emp_username");
     const password = getValueById("emp_password");

@@ -2,8 +2,8 @@
 require_once("../db/connect.php");
 
 // แสดงพนักงานที่มีสิทธิ์ Owner
-$result = $controller->getOwner();
-// print_r($result);
+$result = $controllerEmployees->getOwner();
+// print_r($result); // ทดสอบ getOwner()
 ?>
 <!DOCTYPE html>
 <html lang="en">
