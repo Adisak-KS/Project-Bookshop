@@ -3,13 +3,12 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scrollableModalTitle">ฟอร์มเพิ่มข้อมูลเจ้าของ / ผู้บริหาร</h5>
+                <h5 class="modal-title" id="scrollableModalTitle">ฟอร์มเพิ่มข้อมูลเจ้าของร้าน / ผู้บริหาร</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- <form class="needs-validation" novalidate action="#" onsubmit="return chkFormEmployees();"> -->
-                
-                    <form action="owner_addphp" novalidate method="post"></form>
+                <form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployees();" method="POST">
+                <!-- <form novalidate action="owner_add.php" method="POST"> -->
                     <div class="mb-3">
                         <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>
@@ -35,7 +34,7 @@
                                 <span class="password-eye"></span>
                             </div>
                             <div class="invalid-feedback">
-                               <small>กรุณาระบุ รหัสผ่าน</small>
+                                <small>กรุณาระบุ รหัสผ่าน</small>
                             </div>
                         </div>
                     </div>
@@ -47,7 +46,7 @@
                                 <span class="password-eye"></span>
                             </div>
                             <div class="invalid-feedback">
-                               <small>กรุณาระบุ รหัสผ่านอีกครั้ง</small>
+                                <small>กรุณาระบุ รหัสผ่านอีกครั้ง</small>
                             </div>
                         </div>
                     </div>
@@ -68,7 +67,7 @@
             </div>
             <div class="modal-footer">
                 <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fa-solid fa-xmark"></i> 
+                    <i class="fa-solid fa-xmark"></i>
                     <span>ยกเลิก</span>
                 </button>
                 <button type="submit" name="submit" class="btn btn-success">

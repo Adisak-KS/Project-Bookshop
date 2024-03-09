@@ -16,9 +16,9 @@ $result = $controllerEmployees->getOwner();
     <!-- Begin page -->
     <div id="wrapper">
         <!-- Topbar -->
-        <?php require_once("includes/nav_topbar.php"); ?>
+        <?php require_once("includes/navbar/nav_topbar.php"); ?>
         <!-- Leftbar -->
-        <?php require_once("includes/nav_leftbar.php"); ?>
+        <?php require_once("includes/navbar/nav_leftbar.php"); ?>
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -31,11 +31,11 @@ $result = $controllerEmployees->getOwner();
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="mt-0 header-title">รายการข้อมูลเจ้าของระบบ / ผู้บริหาร ทั้งหมด</h4>
+                                    <h4 class="mt-0 header-title">รายการข้อมูลเจ้าของร้าน / ผู้บริหาร ทั้งหมด</h4>
                                     <hr>
                                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scrollable-modal">
                                         <i class="fa-regular fa-square-plus"></i>
-                                        เพิ่มเจ้าของระบบ
+                                        เพิ่มเจ้าของร้าน
                                     </button>
 
                                     <!-- มีข้อมูลให้แสดง  -->
@@ -52,52 +52,45 @@ $result = $controllerEmployees->getOwner();
                                                     <th>สถานะบัญชี</th>
                                                     <th>ดูรายละเอียด</th>
                                                     <th>แก้ไขข้อมูล</th>
-                                                    <th>ลบข้อมูล</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <td><?php echo $row["emp_id"]; ?></td>
-                                                        <td class="profile">
-                                                            <img src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>" alt="รูปเจ้าของ">
+                                                        <td>
+                                                            <img class="profile" src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>" alt="รูปเจ้าของ">
                                                         </td>
                                                         <td><?php echo $row["emp_fullname"]; ?></td>
                                                         <td><?php echo $row["emp_username"]; ?></td>
                                                         <td><?php echo $row["emp_email"]; ?></td>
                                                         <td>
                                                             <?php
-                                                                $authority_names = explode(",", $row["emp_authority_type_name"]);
-                                                                foreach ($authority_names as $typeName) { //หากมีสิทธิ์ > 1 ให้แสดงลูปแยกบรรทัด
-                                                                    echo $typeName . "<br>";
-                                                                }
+                                                            $authority_names = explode(",", $row["emp_authority_type_name"]);
+                                                            foreach ($authority_names as $typeName) { //หากมีสิทธิ์ > 1 ให้แสดงลูปแยกบรรทัด
+                                                                echo $typeName . "\n<br>";
+                                                            }
                                                             ?>
                                                         </td>
                                                         <td class="status">
                                                             <?php
-                                                                if ($row["emp_status"] == "Activated") {
-                                                                    echo '<span class="badge bg-success">ACTIVATED</span>';
-                                                                } else if ($row["emp_status"] == "Blocked") {
-                                                                    echo '<span class="badge bg-danger">BLOCKED</span>';
-                                                                }
+                                                            if ($row["emp_status"] == "Activated") {
+                                                                echo '<span class="badge bg-success">ACTIVATED</span>';
+                                                            } else if ($row["emp_status"] == "Blocked") {
+                                                                echo '<span class="badge bg-danger">BLOCKED</span>';
+                                                            }
                                                             ?>
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="btn btn-info">
+                                                            <a href="owner_detail.php" class="btn btn-info">
                                                                 <i class="fa-solid fa-eye"></i>
                                                                 รายละเอียด
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="#" class="btn btn-warning">
+                                                            <a href="owner_update_form.php" class="btn btn-warning">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                                 แก้ไข
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-danger">
-                                                                <i class="fa-solid fa-trash"></i>
-                                                                ลบ
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -106,7 +99,7 @@ $result = $controllerEmployees->getOwner();
                                         </table>
                                     <?php } else { ?>
                                         <!-- แสดง หน้าไม่มีข้อมูล  -->
-                                        <?php require_once("includes/alert_notfound.php"); ?>
+                                        <?php require_once("includes/alert/alert_notfound.php"); ?>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -117,7 +110,7 @@ $result = $controllerEmployees->getOwner();
                 </div>
             </div>
             <!-- Footer Start -->
-            <?php require_once("includes/nav_footer.php"); ?>
+            <?php require_once("includes/navbar/nav_footer.php"); ?>
         </div>
         <!-- ============================================================== -->
         <!-- End Page content -->
@@ -126,9 +119,12 @@ $result = $controllerEmployees->getOwner();
     <!-- END wrapper -->
 
     <!-- Right Sidebar -->
-    <?php require_once("includes/nav_rightbar.php"); ?>
+    <?php require_once("includes/navbar/nav_rightbar.php"); ?>
     <!-- Vendor -->
     <?php require_once("includes/vendor.php"); ?>
 </body>
 
 </html>
+
+<!-- แจ้ง Success, Error จากฝั่ง server  -->
+<?php require_once("includes/alert/alert_server-side.php");

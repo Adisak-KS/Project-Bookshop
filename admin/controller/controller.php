@@ -8,6 +8,7 @@ $controllerDefault = new ControllerDefalut($conn);
 
 // ตรวจสอบและเพิ่มข้อมูลเบื้องต้น
 $controllerDefault->insertEmpAuthorityTypeDefault();
+$controllerDefault->insertSuperDefault();
 $controllerDefault->insertOwnerDefault();
 
 

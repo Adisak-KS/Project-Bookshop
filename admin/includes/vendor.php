@@ -32,6 +32,7 @@
 <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.bootstrap5.js"></script>
+
 <!-- SweetAlert2  -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

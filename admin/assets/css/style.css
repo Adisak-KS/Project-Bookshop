@@ -9,15 +9,12 @@
     3. Table
 ********************************************************/
 
-
-
-
 /* 1. ตั้งค่า Root เว็บไซต์ */
 :root{
-    --font-family:"Roboto","Sarabun", sans-serif;
+    --font-family:"Roboto", "Sarabun", sans-serif;
 }
 
-
+/* ------------------------------------------------------ */
 /* 2. ตั้งค่าเว็บไซต์เบื้องต้น */
 *{
     font-family: var(--font-family);
@@ -26,39 +23,36 @@
 h1, h2, h3, h4, h5, h6{
     font-family: var(--font-family) !important;
 }
-
+/* ------------------------------------------------------ */
 
 /* 3. Table  */
 table{
-    min-width: 100%;
+    max-width: 100%;
 }
 
 th{
     text-align: center !important;
-    max-width: 10%;
+    max-width: 5%;
 }
-
 td{
     text-align: left !important;
-    max-width: 10%;
-}
-
-td .profile{
-    max-width: 20%;
 }
 
 td > img{
-    max-width: 30% !important;
+    display: block;
+    margin: 0 auto; 
 }
-.profile{
-    text-align: center !important;
-    /* border-radius: 50%; */
+td img.profile {
+    width: 50px;
+    height: auto;
 }
 
 td.status span{
     font-size: 13px;
 }
-                       
+/* ------------------------------------------------------ */
+
+/* ----------------------------------------  */
 #icon-nodata{
-      font-size: 5em; /* ขยายขนาดให้ใหญ่ขึ้นอย่างละเอียด */
+      font-size: 5em;
 }

@@ -15,6 +15,8 @@ try {
     // เรียกใช่ Controller
     require_once("../admin/controller/controller.php");
 
+    session_start();
+
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
