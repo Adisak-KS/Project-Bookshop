@@ -1,14 +1,15 @@
 <!-- Long Content Scroll Modal -->
-<div class="modal fade" id="scrollable-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="scrollableModalTitle">ฟอร์มเพิ่มข้อมูลเจ้าของร้าน / ผู้บริหาร</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployees();" method="POST">
-                <!-- <form novalidate action="owner_add.php" method="POST"> -->
+<form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployeesInsert();" method="POST">
+    <div class="modal fade" id="scrollable-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scrollableModalTitle">ฟอร์มเพิ่มข้อมูลเจ้าของร้าน / ผู้บริหาร</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- <form novalidate action="owner_add.php" method="POST"> -->
                     <div class="mb-3">
                         <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>
@@ -64,18 +65,19 @@
                             <small>กรุณาระบุ เบอร์โทรศัพท์</small>
                         </div>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fa-solid fa-xmark"></i>
-                    <span>ยกเลิก</span>
-                </button>
-                <button type="submit" name="submit" class="btn btn-success">
-                    <i class="fa-solid fa-floppy-disk"></i>
-                    <span>บันทึก</span>
-                </button>
-            </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>ยกเลิก</span>
+                    </button>
+                    <button type="submit" name="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>บันทึก</span>
+                    </button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>

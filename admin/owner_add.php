@@ -56,4 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         header("Location: owner_show.php");
         $_SESSION["success"] = "เพิ่มข้อมูลสำเร็จ";
     }
+}else{
+    // หากไม่ได้เข้ามาในช่องทางปกติ
+    require_once("includes/alert/no_results_found.php");
+    exit;
 }

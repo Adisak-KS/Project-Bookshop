@@ -56,3 +56,17 @@ td.status span{
 #icon-nodata{
       font-size: 5em;
 }
+
+/* ------------------------------------------------------ */
+#previewEmpProfile {
+    display: block;
+    margin: 0 auto;
+    min-width: 135px;
+    min-height: 135px;
+    max-width: 135px;
+    max-height: 135px;
+    border-radius: 100%;
+    /* border:1px solid black; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* เพิ่มเงาสีเทา */
+
+}

@@ -74,23 +74,23 @@ $result = $controllerEmployees->getOwner();
                                                         </td>
                                                         <td class="status">
                                                             <?php
-                                                            if ($row["emp_status"] == "Activated") {
+                                                            if ($row["emp_status"] == "ACTIVATED") {
                                                                 echo '<span class="badge bg-success">ACTIVATED</span>';
-                                                            } else if ($row["emp_status"] == "Blocked") {
+                                                            } else if ($row["emp_status"] == "BLOCKED") {
                                                                 echo '<span class="badge bg-danger">BLOCKED</span>';
                                                             }
                                                             ?>
                                                         </td>
                                                         <td>
-                                                            <a href="owner_detail.php" class="btn btn-info">
+                                                            <a href="owner_detail?id=<?php echo $row["emp_id"] ?>" class="btn btn-info">
                                                                 <i class="fa-solid fa-eye"></i>
-                                                                รายละเอียด
+                                                                <span>รายละเอียด</span>
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="owner_update_form.php" class="btn btn-warning">
+                                                            <a href="owner_update_form?emp_id=<?php echo $row["emp_id"] ?>" class="btn btn-warning">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
-                                                                แก้ไข
+                                                                <span>แก้ไข</span>
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -99,7 +99,7 @@ $result = $controllerEmployees->getOwner();
                                         </table>
                                     <?php } else { ?>
                                         <!-- แสดง หน้าไม่มีข้อมูล  -->
-                                        <?php require_once("includes/alert/alert_notfound.php"); ?>
+                                        <?php require_once("includes/alert/no_data_available.php"); ?>
                                     <?php } ?>
                                 </div>
                             </div>

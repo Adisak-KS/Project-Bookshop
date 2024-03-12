@@ -27,6 +27,7 @@ class controllerEmployees
             $result = $this->db->query($sql);
             return $result;
         } catch (PDOException $e) {
+            echo $e->getMessage();
             return false;
         }
     }
@@ -121,6 +122,24 @@ class controllerEmployees
                 return false;
             }
         } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    function getEmployeesDetail($empId)
+    {
+        try {
+            $sql = "SELECT * FROM bs_employees
+                    WHERE emp_id = :emp_id
+                    ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":emp_id", $empId);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
             return false;
         }
     }

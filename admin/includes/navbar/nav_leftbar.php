@@ -68,14 +68,14 @@
                 <li class="menu-title mt-2">สำหรับเจ้าาของ</li>
 
                 <li>
-                    <a href="owner_show.php">
+                    <a href="owner_show">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="badge bg-success rounded-pill float-end">9+</span>
                         <span>ข้อมูลเจ้าของ</span>
                     </a>
                 </li>
                 <li>
-                    <a href="admin_show.php">
+                    <a href="admin_show">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="badge bg-success rounded-pill float-end">9+</span>
                         <span>ข้อมูลผู้ดูแลระบบ</span>
