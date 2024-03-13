@@ -33,6 +33,7 @@ if (isset($_GET['emp_id'])) {
                 <!-- Start Content-->
                 <div class="container-fluid">
                     <form class="needs-validation" novalidate action="owner_update" method="post" enctype="multipart/form-data" onsubmit="return chkFormEmployeesUpdate()">
+                    <!-- <form novalidate action="owner_update" method="post" enctype="multipart/form-data"> -->
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="card">
@@ -44,7 +45,7 @@ if (isset($_GET['emp_id'])) {
                                         <hr>
                                         <div class="mb-3">
                                             <label for="emp_id" class="form-label">รหัสพนักงาน : </label>
-                                            <input type="text" class="form-control bg-light" name="emp_id" id="emp_id" value="<?php echo $row["emp_id"]; ?>" placeholder="รหัสของพนักงาน" required disabled>
+                                            <input type="text" class="form-control bg-light" name="emp_id" id="emp_id" value="<?php echo $row["emp_id"]; ?>" placeholder="รหัสของพนักงาน" required readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล :</label>
@@ -91,7 +92,7 @@ if (isset($_GET['emp_id'])) {
                                         <hr>
                                         <div class="mb-3">
                                             <img id="previewEmpProfile" src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>">
-                                            <input type="hidden" class="form-control" value="<?php echo $row["emp_profile"]; ?>" readonly>
+                                            <input type="hidden" class="form-control" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" readonly>
                                             <br>
                                             <label for="emp_newProfile" class="form-label">รูปภาพผู้ใช้ใหม่ : </label>
                                             <input type="file" class="form-control" name="emp_newProfile" id="emp_newProfile" accept="image/png, image/jpeg" onchange="previewEmployeesProfile()">
@@ -126,7 +127,7 @@ if (isset($_GET['emp_id'])) {
                                 <div class="card-body">
                                     <h4 class="header-title">ยืนยันการจัดการข้อมูล  <span class="badge bg-warning rounded-pill text-black">แก้ไขเมื่อ : <?php echo $row["emp_uptime"];?></span></h4>
                                     <hr>
-                                    <a href="owner_show.php" class="btn btn-secondary">
+                                    <a href="owner_show" class="btn btn-secondary">
                                         <i class="fa-solid fa-xmark"></i>
                                         <span>ยกเลิก</span>
                                     </a>
@@ -160,6 +161,5 @@ if (isset($_GET['emp_id'])) {
 </body>
 
 </html>
-<script>
-
-</script>
+<!-- แจ้ง Success, Error จากฝั่ง server  -->
+<?php require_once("includes/alert/alert_server-side.php");
