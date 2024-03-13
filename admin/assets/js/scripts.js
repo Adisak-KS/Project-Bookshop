@@ -97,7 +97,8 @@ function chkFormEmployeesInsert() {
 function chkFormEmployeesUpdate() {
     const empFullname = document.getElementById("emp_fullname").value;
     const empTel = document.getElementById("emp_tel").value;
-    const empNewProfile = document.getElementById("emp_newProfile").value;
+    // const empNewProfile = document.getElementById("emp_newProfile").value;
+    const empNewProfile = document.getElementById("emp_newProfile").files[0];
 
     let errorMessage = "";
 
@@ -112,15 +113,22 @@ function chkFormEmployeesUpdate() {
     if (empTel.trim().length === 0) {
         // ให้ bootstrap5 แจ้งเตือน
     } else if (!/^0[0-9]*$/.test(empTel)) {
-        errorMessage += "เบอร์โทรศัพท์ต้องเป็นตัวเลขและเริ่มด้วย 0 เท่านั้น\n";
+        errorMessage += "เบอร์โทรศัพท์ต้องเป็นตัวเลขและเริ่มด้วย 0 เท่านั้น,\n";
     } else if (empTel.length < 9 || empTel.length > 10) {
-        errorMessage += "เบอร์โทรศัพท์ต้องมี 9-10 ตัว\n";
+        errorMessage += "เบอร์โทรศัพท์ต้องมี 9-10 ตัว,\n";
     }
 
-    if (empNewProfile.trim().length === 0) {
-        // ไม่ต้องทำอะไร
-    } else if (!/(\.jpg|\.jpeg|\.png)$/i.test(empNewProfile)) {
-        errorMessage += "รูปภาพต้องเป็นไฟล์ประเภท .jpg หรือ .png เท่านั้น\n";
+    // เช็คไฟล์รูป
+    if (empNewProfile) {
+        const fileSizeInBytes = empNewProfile.size;
+        const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+        if (fileSizeInMB > 1) {
+            errorMessage += "ขนาดของไฟล์ภาพต้องไม่เกิน 1MB,\n";
+        }
+        const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.test(empNewProfile.name)) {
+            errorMessage += "รูปภาพต้องเป็นไฟล์ประเภท .jpg หรือ .png เท่านั้น,\n";
+        }
     }
 
     if (errorMessage !== "") {
@@ -133,42 +141,14 @@ function chkFormEmployeesUpdate() {
         return false; // ยกเลิก submit
     }
     return true; // submit ได้
-
-
 }
-
-// function previewEmployeesProfile() {
-//     // รับค่า
-//     const preview = document.getElementById('previewImage');
-//     const file = document.getElementById('emp_newProfile').files[0];
-//     // สร้าง FileReader object เพื่ออ่านข้อมูลจากไฟล์
-//     const reader = new FileReader();
-
-//     // กำหนดการทำงานเมื่อการอ่านไฟล์เสร็จ
-//     reader.onloadend = function () {
-//         // กำหนด URL ของไฟล์ที่อ่านได้ให้กับ src attribute ของ <img> tag
-//         preview.src = reader.result;
-//     }
-
-//     // ตรวจสอบว่ามีการเลือกไฟล์หรือไม่
-//     if (file) {
-//         // ถ้ามีการเลือกไฟล์ ให้ใช้ FileReader object ในการอ่านไฟล์และแสดงตัวอย่างรูปภาพ
-//         reader.readAsDataURL(file);
-//     } else {
-//         // ถ้าไม่มีการเลือกไฟล์ ใช้ URL ของรูปภาพของพนักงานที่ถูกเก็บไว้บนเซิร์ฟเวอร์เป็น URL ที่ให้แสดง
-//         preview.src = "uploads/profile_employees/<?php echo $row['emp_profile']; ?>";
-//     }
-// }
 
 function previewEmployeesProfile() {
     const preview = document.getElementById('previewEmpProfile');
     const file = document.getElementById('emp_newProfile').files[0];
-    // สร้าง FileReader object เพื่ออ่านข้อมูลจากไฟล์
     const reader = new FileReader();
 
-     // กำหนดการทำงานเมื่อการอ่านไฟล์เสร็จ
-    reader.onloadend = function() {
-        // แสเดงตัวอย่างรูป
+    reader.onloadend = function () {
         preview.src = reader.result;
     }
 
@@ -177,12 +157,13 @@ function previewEmployeesProfile() {
         if (fileName.endsWith('.png') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg')) {
             reader.readAsDataURL(file);
         } else {
-            // หากเป็นไฟล์ที่ไม่ได้รับอนุญาติ
+            // ใช้ URL ของรูปภาพของพนักงานที่ถูกเก็บไว้บนเซิร์ฟเวอร์
             Swal.fire({
                 icon: 'warning',
                 title: 'คำเตือน',
                 text: 'รูปภาพต้องเป็นไฟล์ประเภท .jpg หรือ .png เท่านั้น',
             });
+            return false;
         }
     } else {
         // ใช้ URL ของรูปภาพของพนักงานที่ถูกเก็บไว้บนเซิร์ฟเวอร์
