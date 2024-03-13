@@ -1,8 +1,6 @@
 <?php
 require_once("../db/connect.php");
-// เปิดใช้งานการแสดงข้อความแจ้งเตือน
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $empId = $_POST["emp_id"];
@@ -42,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             $errorMessage .= "ไฟล์รูปโปรไฟล์ต้องเป็นประเภท .png หรือ .png เท่านั้น";
         }
     }
-    
 
     // หากมี Error
     if (!empty($errorMessage)) {
