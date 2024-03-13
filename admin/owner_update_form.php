@@ -92,7 +92,7 @@ if (isset($_GET['emp_id'])) {
                                         <hr>
                                         <div class="mb-3">
                                             <img id="previewEmpProfile" src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>">
-                                            <input type="hidden" class="form-control" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" readonly>
+                                            <input type="text" class="form-control" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" readonly>
                                             <br>
                                             <label for="emp_newProfile" class="form-label">รูปภาพผู้ใช้ใหม่ : </label>
                                             <input type="file" class="form-control" name="emp_newProfile" id="emp_newProfile" accept="image/png, image/jpeg" onchange="previewEmployeesProfile()">

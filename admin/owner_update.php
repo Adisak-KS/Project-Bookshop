@@ -45,16 +45,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     if (!empty($errorMessage)) {
         $_SESSION['error'] = $errorMessage;
         header("Location: owner_update_form?emp_id=$empId");
-        exit;
+    }else{
+        // ไม่มี Error ให้แก้ไขใน Database
+        $controllerEmployees->updateEmployees($empFullname, $empTel, $empId);
+        $_SESSION['success'] = 'แก้ไขข้อมูลสำเร็จ';
+        header("Location: owner_update_form?emp_id=$empId");
     } 
-    // หากไม่มี Error ให้ดำเนินการเพิ่มข้อมูลต่อไป
+
+    // หากมีการเลือก ACTIVATED ให้แก้ไขใน Database
     if(!empty($empStatus)){
         $controllerEmployees->updateEmployeesStatus($empStatus, $empId);
         $_SESSION['success'] = 'แก้ไขข้อมูลสำเร็จ';
         header("Location: owner_update_form?emp_id=$empId");
     }
 
+
 } else {
-    require_once("includes/alert/no_results_found.php");
-    exit;
+    header("Location: includes/alert/no_results_found.php");
+    
 }
