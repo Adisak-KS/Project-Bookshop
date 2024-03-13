@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
     if (empty($empId) || empty($empFullname) || empty($empTel)) {
         $errorMessage = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
-    } elseif (!preg_match('/^[ก-๙a-zA-Z\s\t]*$/', $empFullname)) {
-        $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ,";
+    } elseif (!preg_match('/^[ก-๙เa-zA-Z\s\t]*$/', $empFullname)) {
+        $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ";    
     } elseif (strlen($empFullname) < 3 || strlen($empFullname) > 50) {
         $errorMessage = "ชื่อ-นามสกุลต้องมี 3-50 ตัวอักษร";
     } elseif (!preg_match('/^0[0-9]*$/', $empTel)) {
@@ -46,13 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         $_SESSION['error'] = $errorMessage;
         header("Location: owner_update_form?emp_id=$empId");
         exit;
-    } else {
+    } 
+    // หากไม่มี Error ให้ดำเนินการเพิ่มข้อมูลต่อไป
+    if(!empty($empStatus)){
+        $controllerEmployees->updateEmployeesStatus($empStatus, $empId);
         $_SESSION['success'] = 'แก้ไขข้อมูลสำเร็จ';
         header("Location: owner_update_form?emp_id=$empId");
-        exit;
     }
-
-    // หากไม่มี Error ให้ดำเนินการเพิ่มข้อมูลต่อไป
 
 } else {
     require_once("includes/alert/no_results_found.php");

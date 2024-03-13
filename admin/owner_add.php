@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
     if (empty($empFullname) || empty($empUsername) || empty($empPassword) || empty($empConfirmPassword) || empty($empEmail) || empty($empTel)) {
         $errorMessage = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
-    } elseif (!preg_match('/^[ก-๙a-zA-Z\s\t]*$/', $empFullname)) {
-        $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ";
+    } elseif (!preg_match('/^[ก-๙เa-zA-Z\s\t]*$/', $empFullname)) {
+        $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ";    
     } elseif (strlen($empFullname) < 3 || strlen($empFullname) > 50) {
         $errorMessage = "ชื่อ-นามสกุลต้องมี 3-50 ตัวอักษร";
     } elseif (!preg_match('/^[a-zA-Z0-9_]*$/', $empUsername)) {

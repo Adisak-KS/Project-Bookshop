@@ -143,5 +143,21 @@ class controllerEmployees
             return false;
         }
     }
+
+    function updateEmployeesStatus($empStatus, $empId)
+    {
+        try {
+            $sql = "UPDATE bs_employees SET emp_status = :emp_status, emp_uptime = NOW() WHERE emp_id = :emp_id
+                   ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":emp_status", $empStatus);
+            $stmt->bindParam(":emp_id", $empId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }
 ?>
