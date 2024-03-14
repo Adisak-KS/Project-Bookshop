@@ -143,9 +143,10 @@ class controllerEmployees
             return false;
         }
     }
-    
+
     // แก้ไขรายละเอียดข้อมูลพนักงาน
-    function updateEmployeesDetail($empFullname, $empTel, $empId){
+    function updateEmployeesDetail($empFullname, $empTel, $empId)
+    {
         try {
             $sql = "UPDATE bs_employees
                     SET emp_fullname = :emp_Fullname,
@@ -164,10 +165,9 @@ class controllerEmployees
             return false;
         }
     }
-    
 
 
-
+    // แก้ไขสถานะบัญชีของพนักงาน
     function updateEmployeesStatus($empStatus, $empId)
     {
         try {
@@ -178,6 +178,47 @@ class controllerEmployees
                    ";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":emp_status", $empStatus);
+            $stmt->bindParam(":emp_id", $empId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+
+    // แก้ไขรูปถาพพนักงาน
+    // function updateEmployeesProfile($empNewProfile, $empId)
+    // {
+    //     try {
+    //         $sql = "UPDATE bs_employees 
+    //                 SET emp_profile = :emp_profile, 
+    //                     emp_uptime = NOW() 
+    //                 WHERE emp_id = :emp_id
+    //                ";
+    //         $stmt = $this->db->prepare($sql);
+    //         $stmt->bindParam(":emp_profile", $empNewProfile);
+    //         $stmt->bindParam(":emp_id", $empId);
+    //         $stmt->execute();
+    //         return true;
+    //     } catch (PDOException $e) {
+    //         echo $e->getMessage();
+    //         return false;
+    //     }
+    // }
+
+
+    function updateEmployeesProfile($empNewProfile, $empId)
+    {
+        try {
+            $sql = "UPDATE bs_employees 
+                    SET emp_profile = :emp_profile, 
+                        emp_uptime = NOW() 
+                    WHERE emp_id = :emp_id
+                   ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":emp_profile", $empNewProfile);
             $stmt->bindParam(":emp_id", $empId);
             $stmt->execute();
             return true;
