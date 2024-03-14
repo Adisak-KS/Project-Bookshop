@@ -1,0 +1,16 @@
+[33mf6ecfc6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Controller UpdateEmployees
+[33m83fee2c[m Controller Function UpdateEmployeesStatus
+[33mc182102[m Merge branch 'main' of https://github.com/Adisak-KS/Project-Bookstore
+[33m75b7796[m Fix bug php script update owner
+[33m6058c5a[m Fix bug php script update owner
+[33m3938a5c[m function Preview Employees Profile
+[33md95619d[m Insert Owner
+[33m69960fb[m Fix Controller
+[33meb035f3[m Fix bug show Owner
+[33md56c94a[m Fix bug Function insertOwnerDefault()
+[33m3dc60d8[m Add Function insertOwnerDefault()
+[33m02619e4[m Function getOwener()
+[33m02f4913[m Add Authority Type and Alert Not Found
+[33m7b55aa4[m Add Script check Form Add Admin
+[33mbfa75ee[m Design Show Admin page
+[33m8ee13f5[m first commit

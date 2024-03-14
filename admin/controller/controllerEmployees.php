@@ -143,11 +143,38 @@ class controllerEmployees
             return false;
         }
     }
+    
+    // แก้ไขรายละเอียดข้อมูลพนักงาน
+    function updateEmployeesDetail($empFullname, $empTel, $empId){
+        try {
+            $sql = "UPDATE bs_employees
+                    SET emp_fullname = :emp_Fullname,
+                        emp_tel = :emp_tel,
+                        emp_uptime = NOW()
+                    WHERE emp_id = :emp_id
+                   ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":emp_Fullname", $empFullname);
+            $stmt->bindParam(":emp_tel", $empTel);
+            $stmt->bindParam(":emp_id", $empId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+    
+
+
 
     function updateEmployeesStatus($empStatus, $empId)
     {
         try {
-            $sql = "UPDATE bs_employees SET emp_status = :emp_status, emp_uptime = NOW() WHERE emp_id = :emp_id
+            $sql = "UPDATE bs_employees 
+                    SET emp_status = :emp_status, 
+                        emp_uptime = NOW() 
+                    WHERE emp_id = :emp_id
                    ";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":emp_status", $empStatus);
