@@ -65,7 +65,7 @@
                     </a>
                 </li>
 
-                <li class="menu-title mt-2">สำหรับเจ้าาของ</li>
+                <li class="menu-title mt-2">สำหรับเจ้าของร้าน</li>
 
                 <li>
                     <a href="owner_show">

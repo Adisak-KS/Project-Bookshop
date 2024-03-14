@@ -127,7 +127,7 @@ function chkFormEmployeesUpdate() {
         }
         const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
         if (!allowedExtensions.test(empNewProfile.name)) {
-            errorMessage += "รูปภาพต้องเป็นไฟล์ประเภท .jpg หรือ .png เท่านั้น,\n";
+            errorMessage += "รูปภาพต้องเป็นไฟล์ประเภท .jpg หรือ .png เท่านั้น\n";
         }
     }
 

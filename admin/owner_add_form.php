@@ -1,6 +1,6 @@
 <!-- Long Content Scroll Modal -->
-<!-- <form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployeesInsert();" method="POST"> -->
-<form novalidate action="owner_add.php" method="POST">
+<form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployeesInsert();" method="POST">
+<!-- <form novalidate action="owner_add.php" method="POST"> -->
     <div class="modal fade" id="scrollable-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">

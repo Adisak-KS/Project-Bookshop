@@ -4,11 +4,13 @@ class controllerEmployees
 {
     private $db;
 
+    // ทดสอบใช้งาน ControllerEmployees ได้
     function __construct($conn)
     {
         $this->db = $conn;
         // echo "เรียกใช้งาน Controller Employees เริ่มต้นสำเร็จ";
     }
+
 
     // แสดงข้อมูล Employees ที่มีสิทธิ์ Owner
     function getOwner()
@@ -32,6 +34,7 @@ class controllerEmployees
         }
     }
 
+
     // ตรวจสอบ Usename และ Email ของ Employees
     function checkEmpUsernameExist($empUsername, $empEmail)
     {
@@ -50,7 +53,8 @@ class controllerEmployees
         }
     }
 
-    // ตรวจสอบฟอร์มเพิ่มข้อมูลพนักงาน
+
+    // ตรวจสอบฟอร์ม Insert ข้อมูล Employee
     function validateFormInsertEmployee($empFullname, $empUsername, $empPassword, $empConfirmPassword, $empEmail, $empTel)
     {
         // เก็บข้อความ Error
@@ -100,9 +104,7 @@ class controllerEmployees
     }
 
 
-
-
-
+    // เพิ่มข้อมูล Employee ที่มีสิทธิ์ Owner
     function insertOwner($empFullname, $empUsername, $empPassword, $empEmail, $empTel)
     {
         try {
@@ -180,6 +182,8 @@ class controllerEmployees
         }
     }
 
+
+    // แสดง Detail ข้อมูล Employee ตาม Id
     function getEmployeesDetail($empId)
     {
         try {
@@ -197,7 +201,36 @@ class controllerEmployees
         }
     }
 
-    // แก้ไขรายละเอียดข้อมูลพนักงาน
+
+    // ตรวจสอบ Form แก้ไขข้อมูล Employees
+    function validateFormUpdateEmployee($empFullname, $empTel, $empId)
+    {
+        // เก็บข้อความ Error
+        $errorMessage = "";
+
+        // ตรวจสอบเงื่อนไขหากมี  $errorMessage จะหยุดตรวจสอบเงื่อนไขอื่น ๆ ทันที และแจ้งเตือน
+        if (empty($empId) || empty($empFullname) || empty($empTel)) {
+            $errorMessage = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
+            return $errorMessage;
+        } elseif (!preg_match('/^[ก-๙เa-zA-Z\s\t]*$/', $empFullname)) {
+            $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ";
+            return $errorMessage;
+        } elseif (strlen($empFullname) < 3 || strlen($empFullname) > 50) {
+            $errorMessage = "ชื่อ-นามสกุลต้องมี 3-50 ตัวอักษร";
+            return $errorMessage;
+        } elseif (!preg_match('/^0[0-9]*$/', $empTel)) {
+            $errorMessage = "เบอร์โทรศัพท์ต้องเป็นตัวเลขและเริ่มด้วย 0 เท่านั้น";
+            return $errorMessage;
+        } elseif (strlen($empTel) < 9 || strlen($empTel) > 10) {
+            $errorMessage = "เบอร์โทรศัพท์ต้องมี 9-10 ตัว";
+            return $errorMessage;
+        }
+        // ส่งผลการตรวจสอบ
+        return $errorMessage;
+    }
+
+
+    // แก้ไขรายละเอียดข้อมูล Employees
     function updateEmployeesDetail($empFullname, $empTel, $empId)
     {
         try {
@@ -219,25 +252,76 @@ class controllerEmployees
         }
     }
 
-    // แก้ไขรูปพนักงาน
-    // function updateEmployeesProfile($empNewProfile, $empId)
-    // {
-    //     try {
-    //         $sql = "UPDATE bs_employees 
-    //                 SET emp_profile = :emp_profile, 
-    //                     emp_uptime = NOW() 
-    //                 WHERE emp_id = :emp_id
-    //                ";
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->bindParam(":emp_profile", $empNewProfile);
-    //         $stmt->bindParam(":emp_id", $empId);
-    //         $stmt->execute();
-    //         return true;
-    //     } catch (PDOException $e) {
-    //         echo $e->getMessage();
-    //         return false;
-    //     }
-    // }
+
+    // ตรวจสอบไฟล์ Profile ที่อัปโหลดมา
+    function validateUpdateEmployeesProfile($empNewProfile)
+    {
+        // เก็บข้อความข้อผิดพลาด
+        $errorMessage = "";
+
+        // ตรวจสอบประเภทของไฟล์
+        $allowedMimeTypes = array("image/png", "image/jpeg", "image/jpg");
+        $fileMimeType = $empNewProfile["type"];
+
+        // ตรวจสอบว่าไฟล์มีประเภทที่ถูกต้องหรือไม่
+        if (!in_array($fileMimeType, $allowedMimeTypes)) {
+            $errorMessage = "รูปภาพต้องเป็นประเภท .png .jpg หรือ .jpeg เท่านั้น";
+            return $errorMessage;
+        }
+
+        // ตรวจสอบขนาดของไฟล์
+        $maxFileSize = 1 * 1024 * 1024; // 1MB
+        if ($empNewProfile["size"] > $maxFileSize) {
+            $errorMessage = "ขนาดไฟล์ต้องไม่เกิน 1MB";
+            return $errorMessage;
+        }
+
+        // ส่งผลการตรวจสอบ
+        return $errorMessage;
+    }
+
+
+    // แก้ไข Profile และบันทึก Database 
+    function updateEmployeesProfile($empProfile, $empNewProfile, $empId)
+    {
+        try {
+            // Folder เก็บไฟล์
+            $uploadsDirectory = "uploads/profile_employees/";
+
+            // ลบไฟล์เดิม (ถ้ามี)
+            $oldFilePath = $uploadsDirectory . $empProfile;
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+
+            // สุ่มชื่อไฟล์ใหม่
+            $newProfile = uniqid('profile_', true) . '.' . pathinfo($empNewProfile['name'], PATHINFO_EXTENSION);
+            $pathNewProfile = $uploadsDirectory . $newProfile;
+
+            if (move_uploaded_file($empNewProfile['tmp_name'], $pathNewProfile)) {
+
+                // ตัวแปร เก็บชื่อไฟล์ใหม่ลง  Database
+                $empNewProfileName = $newProfile;
+
+                $sql = "UPDATE bs_employees 
+                    SET emp_profile = :emp_profile, 
+                        emp_uptime = NOW() 
+                    WHERE emp_id = :emp_id
+                   ";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindParam(":emp_profile", $empNewProfileName);
+                $stmt->bindParam(":emp_id", $empId);
+                $stmt->execute();
+                return true;
+            } else {
+                $errorMessage = "เกิดข้อผิดพลาดในการอัปโหลดไฟล์";
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 
 
     // แก้ไขสถานะบัญชีของพนักงาน
@@ -251,25 +335,6 @@ class controllerEmployees
                    ";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":emp_status", $empStatus);
-            $stmt->bindParam(":emp_id", $empId);
-            $stmt->execute();
-            return true;
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
-
-    function updateEmployeesProfile($empNewProfile, $empId)
-    {
-        try {
-            $sql = "UPDATE bs_employees 
-                    SET emp_profile = :emp_profile, 
-                        emp_uptime = NOW() 
-                    WHERE emp_id = :emp_id
-                   ";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(":emp_profile", $empNewProfile);
             $stmt->bindParam(":emp_id", $empId);
             $stmt->execute();
             return true;

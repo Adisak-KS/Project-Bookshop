@@ -33,7 +33,7 @@ if (isset($_GET['emp_id'])) {
                 <!-- Start Content-->
                 <div class="container-fluid">
                     <form class="needs-validation" novalidate action="owner_update" method="post" enctype="multipart/form-data" onsubmit="return chkFormEmployeesUpdate()">
-                    <form novalidate action="owner_update" method="post" enctype="multipart/form-data">
+                        <!-- <form novalidate action="owner_update" method="post" enctype="multipart/form-data"> -->
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="card">
@@ -125,7 +125,7 @@ if (isset($_GET['emp_id'])) {
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="header-title">ยืนยันการจัดการข้อมูล  <span class="badge bg-warning rounded-pill text-black">แก้ไขเมื่อ : <?php echo $row["emp_uptime"];?></span></h4>
+                                    <h4 class="header-title">ยืนยันการจัดการข้อมูล <span class="badge bg-warning rounded-pill text-black">แก้ไขเมื่อ : <?php echo $row["emp_uptime"]; ?></span></h4>
                                     <hr>
                                     <a href="owner_show" class="btn btn-secondary">
                                         <i class="fa-solid fa-xmark"></i>
