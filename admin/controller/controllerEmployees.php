@@ -50,6 +50,59 @@ class controllerEmployees
         }
     }
 
+    // ตรวจสอบฟอร์มเพิ่มข้อมูลพนักงาน
+    function validateFormInsertEmployee($empFullname, $empUsername, $empPassword, $empConfirmPassword, $empEmail, $empTel)
+    {
+        // เก็บข้อความ Error
+        $errorMessage = "";
+
+        // ตรวจสอบเงื่อนไขหากมี  $errorMessage จะหยุดตรวจสอบเงื่อนไขอื่น ๆ ทันที และแจ้งเตือน
+        if (empty($empFullname) || empty($empUsername) || empty($empPassword) || empty($empConfirmPassword) || empty($empEmail) || empty($empTel)) {
+            $errorMessage = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
+            return $errorMessage;
+        } elseif (!preg_match('/^[ก-๙เa-zA-Z\s\t]*$/', $empFullname)) {
+            $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ";
+            return $errorMessage;
+        } elseif (strlen($empFullname) < 3 || strlen($empFullname) > 50) {
+            $errorMessage = "ชื่อ-นามสกุลต้องมี 3-50 ตัวอักษร";
+            return $errorMessage;
+        } elseif (!preg_match('/^[a-zA-Z0-9_]*$/', $empUsername)) {
+            $errorMessage = "ชื่อผู้ใช้มีได้เฉพาะภาษาอังกฤษและ _ เท่านั้น และไม่มีเว้นวรรค";
+            return $errorMessage;
+        } elseif (strlen($empUsername) < 6 || strlen($empUsername) > 30) {
+            $errorMessage = "ชื่อผู้ใช้ต้องมี 3-30 ตัวอักษร";
+            return $errorMessage;
+        } elseif (!preg_match('/[A-Z]/', $empPassword) || !preg_match('/[a-z]/', $empPassword) || !preg_match('/[0-9]/', $empPassword) || !preg_match('/[!@#$%^&*()_+-|~=`{}\[\]:";\'<>?,.\/]/', $empPassword)) {
+            $errorMessage = "รหัสผ่านต้องมี A-Z, a-z, 0-9, และสัญลักษณ์อย่างละ 1 ตัว ห้ามมีเว้นวรรค";
+            return $errorMessage;
+        } elseif (strlen($empPassword) < 8 || strlen($empPassword) > 16) {
+            $errorMessage = "รหัสผ่านต้องมี 8-16 ตัวอักษร";
+            return $errorMessage;
+        } elseif ($empConfirmPassword !== $empPassword) {
+            $errorMessage = "รหัสผ่านกับยืนยันรหัสผ่านไม่ตรงกัน";
+            return $errorMessage;
+        } elseif (!filter_var($empEmail, FILTER_VALIDATE_EMAIL)) {
+            $errorMessage = "รูปแบบอีเมลไม่ถูกต้อง";
+            return $errorMessage;
+        } elseif (strlen($empEmail) < 16 || strlen($empEmail) > 65) {
+            $errorMessage = "อีเมลต้องมี 16-65 ตัวอักษร";
+            return $errorMessage;
+        } elseif (!preg_match('/^0[0-9]*$/', $empTel)) {
+            $errorMessage = "เบอร์โทรศัพท์ต้องเป็นตัวเลขและเริ่มด้วย 0 เท่านั้น";
+            return $errorMessage;
+        } elseif (strlen($empTel) < 9 || strlen($empTel) > 10) {
+            $errorMessage = "เบอร์โทรศัพท์ต้องมี 9-10 ตัว";
+            return $errorMessage;
+        }
+
+        // ส่งผลการตรวจสอบ
+        return $errorMessage;
+    }
+
+
+
+
+
     function insertOwner($empFullname, $empUsername, $empPassword, $empEmail, $empTel)
     {
         try {
@@ -166,6 +219,26 @@ class controllerEmployees
         }
     }
 
+    // แก้ไขรูปพนักงาน
+    // function updateEmployeesProfile($empNewProfile, $empId)
+    // {
+    //     try {
+    //         $sql = "UPDATE bs_employees 
+    //                 SET emp_profile = :emp_profile, 
+    //                     emp_uptime = NOW() 
+    //                 WHERE emp_id = :emp_id
+    //                ";
+    //         $stmt = $this->db->prepare($sql);
+    //         $stmt->bindParam(":emp_profile", $empNewProfile);
+    //         $stmt->bindParam(":emp_id", $empId);
+    //         $stmt->execute();
+    //         return true;
+    //     } catch (PDOException $e) {
+    //         echo $e->getMessage();
+    //         return false;
+    //     }
+    // }
+
 
     // แก้ไขสถานะบัญชีของพนักงาน
     function updateEmployeesStatus($empStatus, $empId)
@@ -186,28 +259,6 @@ class controllerEmployees
             return false;
         }
     }
-
-
-    // แก้ไขรูปถาพพนักงาน
-    // function updateEmployeesProfile($empNewProfile, $empId)
-    // {
-    //     try {
-    //         $sql = "UPDATE bs_employees 
-    //                 SET emp_profile = :emp_profile, 
-    //                     emp_uptime = NOW() 
-    //                 WHERE emp_id = :emp_id
-    //                ";
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->bindParam(":emp_profile", $empNewProfile);
-    //         $stmt->bindParam(":emp_id", $empId);
-    //         $stmt->execute();
-    //         return true;
-    //     } catch (PDOException $e) {
-    //         echo $e->getMessage();
-    //         return false;
-    //     }
-    // }
-
 
     function updateEmployeesProfile($empNewProfile, $empId)
     {

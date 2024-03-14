@@ -1,5 +1,6 @@
 <!-- Long Content Scroll Modal -->
-<form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployeesInsert();" method="POST">
+<!-- <form class="needs-validation" novalidate action="owner_add.php" onsubmit="return chkFormEmployeesInsert();" method="POST"> -->
+<form novalidate action="owner_add.php" method="POST">
     <div class="modal fade" id="scrollable-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -9,7 +10,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <!-- <form novalidate action="owner_add.php" method="POST"> -->
+                    
                     <div class="mb-3">
                         <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>

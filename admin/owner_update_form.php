@@ -32,7 +32,7 @@ if (isset($_GET['emp_id'])) {
             <div class="content">
                 <!-- Start Content-->
                 <div class="container-fluid">
-                    <!-- <form class="needs-validation" novalidate action="owner_update" method="post" enctype="multipart/form-data" onsubmit="return chkFormEmployeesUpdate()"> -->
+                    <form class="needs-validation" novalidate action="owner_update" method="post" enctype="multipart/form-data" onsubmit="return chkFormEmployeesUpdate()">
                     <form novalidate action="owner_update" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-6">

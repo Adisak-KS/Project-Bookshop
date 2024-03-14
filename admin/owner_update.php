@@ -30,9 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     }
 
     // หากมีการอัปโหลดรูปภาพมา
-    if(!empty($empNewProfile)){
+    if (!empty($empNewProfile)) {
         // ตรวจสอบว่ามีข้อผิดพลาดในการอัปโหลดหรือไม่
-        if($empNewProfile['error'] === UPLOAD_ERR_OK){
+        if ($empNewProfile['error'] === UPLOAD_ERR_OK) {
             // ตำแหน่งที่จะเก็บ
             $uploadDir = "uploads/profile_employees/";
             $uploadFile = $uploadDir . basename($empNewProfile['name']);
@@ -40,11 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
                 $empNewProfile = basename($empNewProfile['name']);
                 $controllerEmployees->updateEmployeesProfile($empNewProfile, $empId);
-
             } else {
                 $errorMessage = "เกิดข้อผิดพลาดในการอัปโหลดไฟล์";
             }
-        }else{
+        } else {
             $errorMessage = "มีข้อผิดพลาดในการอัปโหลด";
         }
     }
@@ -62,16 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     if (!empty($errorMessage)) {
         $_SESSION['error'] = $errorMessage;
         header("Location: owner_update_form?emp_id=$empId");
-
     }
-    // หากมีการเลือก ACTIVATED ให้แก้ไขใน Database
-    if(!empty($empStatus)){
-        $controllerEmployees->updateEmployeesStatus($empStatus, $empId);
-        $_SESSION['success'] = 'แก้ไขข้อมูลสำเร็จ';
-        header("Location: owner_update_form?emp_id=$empId");
-    }
-
 } else {
-    header("Location: includes/alert/no_results_found.php");
-    
+    require_once "includes/alert/no_results_found.php";
 }

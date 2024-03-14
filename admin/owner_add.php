@@ -2,7 +2,7 @@
 require_once("../db/connect.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-    // รับค่า
+    // รับค่าจากฟอร์ม
     $empFullname = $_POST["emp_fullname"];
     $empUsername = $_POST["emp_username"];
     $empPassword = $_POST["emp_password"];
@@ -10,54 +10,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $empEmail = $_POST["emp_email"];
     $empTel = $_POST["emp_tel"];
 
-    $errorMessage = "";
+    // เรียกใช้ฟังก์ชัน validateFormInsertEmployee เพื่อตรวจสอบข้อมูลฟอร์ม
+    $errorMessage = $controllerEmployees->validateFormInsertEmployee($empFullname, $empUsername, $empPassword, $empConfirmPassword, $empEmail, $empTel);
 
-    if (empty($empFullname) || empty($empUsername) || empty($empPassword) || empty($empConfirmPassword) || empty($empEmail) || empty($empTel)) {
-        $errorMessage = "กรุณากรอกข้อมูลให้ครบทุกช่อง";
-    } elseif (!preg_match('/^[ก-๙เa-zA-Z\s\t]*$/', $empFullname)) {
-        $errorMessage = "ชื่อ-นามสกุลห้ามมีตัวเลขและสัญลักษณ์พิเศษ";    
-    } elseif (strlen($empFullname) < 3 || strlen($empFullname) > 50) {
-        $errorMessage = "ชื่อ-นามสกุลต้องมี 3-50 ตัวอักษร";
-    } elseif (!preg_match('/^[a-zA-Z0-9_]*$/', $empUsername)) {
-        $errorMessage = "ชื่อผู้ใช้มีได้เฉพาะภาษาอังกฤษและ _ เท่านั้น และไม่มีเว้นวรรค";
-    } elseif (strlen($empUsername) < 6 || strlen($empUsername) > 30) {
-        $errorMessage = "ชื่อผู้ใช้ต้องมี 3-30 ตัวอักษร";
-    } elseif (!preg_match('/[A-Z]/', $empPassword) || !preg_match('/[a-z]/', $empPassword) || !preg_match('/[0-9]/', $empPassword) || !preg_match('/[!@#$%^&*()_+-|~=`{}\[\]:";\'<>?,.\/]/', $empPassword)) {
-        $errorMessage = "รหัสผ่านต้องมี A-Z, a-z, 0-9, และสัญลักษณ์อย่างละ 1 ตัว ห้ามมีเว้นวรรค";
-    } elseif (strlen($empPassword) < 8 || strlen($empPassword) > 16) {
-        $errorMessage = "รหัสผ่านต้องมี 8-16 ตัวอักษร";
-    } elseif ($empConfirmPassword !== $empPassword) {
-        $errorMessage = "รหัสผ่านกับยืนยันรหัสผ่านไม่ตรงกัน";
-    } elseif (!filter_var($empEmail, FILTER_VALIDATE_EMAIL)) {
-        $errorMessage = "รูปแบบอีเมลไม่ถูกต้อง";
-    } elseif (strlen($empEmail) < 16 || strlen($empEmail) > 65) {
-        $errorMessage = "อีเมลต้องมี 16-65 ตัวอักษร";
-    } elseif (!preg_match('/^0[0-9]*$/', $empTel)) {
-        $errorMessage = "เบอร์โทรศัพท์ต้องเป็นตัวเลขและเริ่มด้วย 0 เท่านั้น";
-    } elseif (strlen($empTel) < 9 || strlen($empTel) > 10) {
-        $errorMessage = "เบอร์โทรศัพท์ต้องมี 9-10 ตัว";
-    }
-    // หากมี Error
+    // หากมีข้อผิดพลาด
     if (!empty($errorMessage)) {
         $_SESSION['error'] = $errorMessage;
         header("Location: owner_show.php");
         exit;
-    }
-
-    // ตรวจสอบ Username และ Email ใน Database
-    $count = $controllerEmployees->checkEmpUsernameExist($empUsername, $empEmail);
-
-    if ($count > 0) {
-        header("Location: owner_show.php");
-        $_SESSION["error"] = "ชื่อผู้ใช้หรืออีเมลไม่สามารถใช้งานได้";
-        exit;
     } else {
-        $result = $controllerEmployees->insertOwner($empFullname, $empUsername, $empPassword, $empEmail, $empTel);
+
+        // ตรวจสอบชื่อผู้ใช้และอีเมลซ้ำกันในฐานข้อมูล
+        $count = $controllerEmployees->checkEmpUsernameExist($empUsername, $empEmail);
+        if ($count > 0) {
+            // หากมี Username Or Email ซ้ำ
+            $_SESSION["error"] = "ชื่อผู้ใช้หรืออีเมลไม่สามารถใช้งานได้";
+
+        } else {
+            // เพิ่มข้อมูลพนักงงานลงใน Database
+            $result = $controllerEmployees->insertOwner($empFullname, $empUsername, $empPassword, $empEmail, $empTel);
+            $_SESSION["success"] = "เพิ่มข้อมูลสำเร็จ";
+        }
+
+        //ส่ง Error OR Succrss และไปหน้า owner_show.php
         header("Location: owner_show.php");
-        $_SESSION["success"] = "เพิ่มข้อมูลสำเร็จ";
+        exit;
     }
-}else{
-    // หากไม่ได้เข้ามาในช่องทางปกติ
+} else {
+    // หากไม่ได้เข้ามาผ่านวิธีการ POST หรือไม่ได้กดปุ่ม submit
     require_once("includes/alert/no_results_found.php");
-    exit;
 }
