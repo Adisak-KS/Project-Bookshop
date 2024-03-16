@@ -48,24 +48,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="content">
                 <!-- Start Content-->
                 <div class="container-fluid">
-                    <form class="needs-validation" novalidate action="owner_update" method="post" enctype="multipart/form-data" onsubmit="return chkFormEmployeesUpdate()">
-                        <!-- <form novalidate action="owner_update" method="post" enctype="multipart/form-data"> -->
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="header-title">
                                             <i class="fa-solid fa-pen-to-square"></i>
-                                            <span>แก้ไขข้อมูลพนักงาน</span>
+                                            <span>รายละเอียดข้อมูลพนักงาน</span>
                                         </h4>
                                         <hr>
                                         <div class="mb-3">
                                             <label for="emp_id" class="form-label">รหัสพนักงาน : </label>
-                                            <input type="text" class="form-control bg-light" name="emp_id" id="emp_id" value="<?php echo $row["emp_id"]; ?>" placeholder="รหัสของพนักงาน" required readonly>
+                                            <input type="text" class="form-control bg-light" name="emp_id" id="emp_id" value="<?php echo $row["emp_id"]; ?>" placeholder="รหัสของพนักงาน" required disabled>
                                         </div>
                                         <div class="mb-3">
                                             <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล :</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" value="<?php echo $row["emp_fullname"]; ?>" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>
+                                            <input type="text" class="form-control bg-light" name="emp_fullname" id="emp_fullname" value="<?php echo $row["emp_fullname"]; ?>" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required disabled>
                                             <div class="invalid-feedback">
                                                 <small>กรุณาระบุ ชื่อ - นามสกุล</small>
                                             </div>
@@ -89,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                         <div class="mb-3">
                                             <label for="emp_tel" class="form-label">เบอร์โทรศัพท์ :</label><span class="text-danger">*</span>
-                                            <input type="tel" class="form-control" name="emp_tel" id="emp_tel" value="<?php echo $row["emp_tel"]; ?>" placeholder="ระบุเบอร์โทรศัพท์ เช่น 0876543210" maxlength="10" required>
+                                            <input type="tel" class="form-control bg-light" name="emp_tel" id="emp_tel" value="<?php echo $row["emp_tel"]; ?>" placeholder="ระบุเบอร์โทรศัพท์ เช่น 0876543210" maxlength="10" required disabled>
                                             <div class="invalid-feedback">
                                                 <small>กรุณาระบุ เบอร์โทรศัพท์</small>
                                             </div>
@@ -99,19 +97,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class="col-lg-6">
-                                <div class="card">
+                                <div class="card pb-5">
                                     <div class="card-body">
                                         <h4 class="header-title">
                                             <i class="fa-solid fa-pen-to-square"></i>
-                                            <span>แก้ไขรูปภาพผู้ใช้งาน</span>
+                                            <span>รายละเอียดรูปภาพผู้ใช้งาน</span>
                                         </h4>
                                         <hr>
                                         <div class="mb-3">
                                             <img id="previewEmpProfile" src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>">
-                                            <input type="hidden" class="form-control" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" readonly>
+                                            <input type="hidden" class="form-control bg-light" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" disabled>
                                             <br>
-                                            <label for="emp_newProfile" class="form-label">รูปภาพผู้ใช้ใหม่ : </label>
-                                            <input type="file" class="form-control" name="emp_newProfile" id="emp_newProfile" accept="image/png, image/jpeg" onchange="previewEmployeesProfile()">
+                                            <!-- <label for="emp_newProfile" class="form-label">รูปภาพผู้ใช้ใหม่ : </label> -->
+                                            <!-- <input type="file" class="form-control bg-light" name="emp_newProfile" id="emp_newProfile" accept="image/png, image/jpeg" onchange="previewEmployeesProfile()" disabled> -->
                                         </div>
                                     </div>
                                 </div>
@@ -120,12 +118,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="card-body">
                                         <h4 class="header-title">
                                             <i class="fa-solid fa-pen-to-square"></i>
-                                            <span>แก้ไขสถานะบัญชี</span>
+                                            <span>รายละเอียดสถานะบัญชี</span>
                                         </h4>
                                         <hr>
                                         <div class="form-check">
                                             <div class="form-check mb-2 form-check-success">
-                                                <input class="form-check-input" type="radio" name="emp_status" value="ACTIVATED" <?php if ($row["emp_status"] == "ACTIVATED") echo "checked"; ?>>
+                                                <input class="form-check-input" type="radio" name="emp_status" value="ACTIVATED" <?php if ($row["emp_status"] == "ACTIVATED") echo "checked"; ?> disabled>
                                                 <label class="form-check-label" for="emp_status">อนุญาติให้ใช้งาน (ACTIVATED)</label>
                                             </div>
                                             <div class="form-check mb-2 form-check-danger">
@@ -148,14 +146,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <span>ยกเลิก</span>
                                     </a>
 
-                                    <button type="submit" name="submit" class="btn btn-warning">
+                                    <!-- <button type="submit" name="submit" class="btn btn-warning">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                         <span>บันทึกการแก้ไข</span>
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div> <!-- end card-body -->
                         </div>
-                    </form>
                 </div>
 
             </div>

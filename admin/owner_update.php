@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     }
 
 
-    // ส่ง SESSION กลับไป
+    // ส่ง SESSION และกลับ
     header($location);
 } else {
     // หากไม่ได้เข้ามาผ่านวิธีการ POST หรือไม่ได้กดปุ่ม submit

@@ -1,5 +1,4 @@
-<hr>
-<!-- ิ<br><br> -->
+<!-- <br><br> -->
 <div class="alert alert-warning" role="alert">
     <h2 class="alert-heading text-center">ไม่พบข้อมูล !</h2>
     <br>

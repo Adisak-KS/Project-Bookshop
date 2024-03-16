@@ -26,33 +26,15 @@ class controllerEmployees
                     GROUP BY a.emp_id
                     HAVING COUNT(DISTINCT b.emp_authority_type_id) = 2;
                    ";
-            $result = $this->db->query($sql);
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
     }
-
-
-    // ตรวจสอบ Usename และ Email ของ Employees
-    function checkEmpUsernameExist($empUsername, $empEmail)
-    {
-        try {
-            $sql = "SELECT COUNT(*) AS count FROM bs_employees
-                    WHERE emp_username = :emp_username OR emp_email = :emp_email
-                   ";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':emp_username', $empUsername);
-            $stmt->bindParam(':emp_email', $empEmail);
-            $stmt->execute();
-            $result = $stmt->fetch();
-            return $result['count'];
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
 
     // ตรวจสอบฟอร์ม Insert ข้อมูล Employee
     function validateFormInsertEmployee($empFullname, $empUsername, $empPassword, $empConfirmPassword, $empEmail, $empTel)
@@ -103,11 +85,49 @@ class controllerEmployees
         return $errorMessage;
     }
 
+    // ตรวจสอบ Usename และ Email ของ Employees
+    // function checkEmpUsernameExist($empUsername, $empEmail)
+    // {
+    //     try {
+    //         $sql = "SELECT COUNT(*) AS count FROM bs_employees
+    //                 WHERE emp_username = :emp_username OR emp_email = :emp_email
+    //                ";
+    //         $stmt = $this->db->prepare($sql);
+    //         $stmt->bindParam(':emp_username', $empUsername);
+    //         $stmt->bindParam(':emp_email', $empEmail);
+    //         $stmt->execute();
+    //         $result = $stmt->fetch();
+    //         return $result['count'];
+    //     } catch (PDOException $e) {
+    //         return false;
+    //     }
+    // }
+    function checkEmpUsernameExist($empUsername, $empEmail)
+    {
+        try {
+            $sql = "SELECT 1 FROM bs_employees
+                WHERE emp_username = :emp_username OR emp_email = :emp_email
+                LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':emp_username', $empUsername);
+            $stmt->bindParam(':emp_email', $empEmail);
+            $stmt->execute();
+            $result = $stmt->fetchColumn() !== false;
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+
 
     // เพิ่มข้อมูล Employee ที่มีสิทธิ์ Owner
     function insertOwner($empFullname, $empUsername, $empPassword, $empEmail, $empTel)
     {
         try {
+
+            // เก็บข้อความ Error
+            $errorMessage = "";
 
             $empAuthorityType = 2;
             $empAuthorityTyp2 = 6;
@@ -123,8 +143,9 @@ class controllerEmployees
 
             // ตรวจสอบว่าไฟล์ profile_default.png มีอยู่หรือไม่
             if (!file_exists($empProfile)) {
-                echo "ไฟล์ต้นฉบับไม่พบ";
-                return false;
+                $errorMessage = "ไม่พบไฟล์รูปภาพเริ่มต้น";
+                return $errorMessage;
+                // return false;
             }
 
             // ไฟล์ defaluft -> สุ่มชื่อ -> นำไปเก็บที่ $pathNewProfile
@@ -168,20 +189,16 @@ class controllerEmployees
                 $stmt3->bindParam(':empAuthorityTypeId', $empAuthorityTyp2);
                 $stmt3->execute();
 
-
-
-                header("Location:owner_show.php");
                 return true;
             } else {
-                echo "เกิดข้อผิดพลาดในการคัดลอกไฟล์";
-                return false;
+                $errorMessage = "เกิดข้อผิดพลาดในการคัดลอกไฟล์";
+                return $errorMessage;
             }
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
     }
-
 
     // แสดง Detail ข้อมูล Employee ตาม Id
     function getEmployeesDetail($empId)
@@ -267,7 +284,6 @@ class controllerEmployees
         if (!in_array($fileMimeType, $allowedMimeTypes)) {
             $errorMessage = "รูปภาพต้องเป็นประเภท .png .jpg หรือ .jpeg เท่านั้น";
             return $errorMessage;
-
         }
 
         // ตรวจสอบขนาดของไฟล์
@@ -339,6 +355,20 @@ class controllerEmployees
             $stmt->bindParam(":emp_id", $empId);
             $stmt->execute();
             return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    // แสดงข้อมูลประเภทสิทธิ์ที่มีในระบบทั้งหมด
+    function getAuthorityType()
+    {
+        try {
+            $sql = "SELECT * FROM bs_employees_authority_type";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;

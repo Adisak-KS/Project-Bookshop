@@ -10,14 +10,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $empEmail = $_POST["emp_email"];
     $empTel = $_POST["emp_tel"];
 
+    $location = "Location: owner_show";
+
     // เรียกใช้ฟังก์ชัน validateFormInsertEmployee เพื่อตรวจสอบข้อมูลฟอร์ม
     $errorMessage = $controllerEmployees->validateFormInsertEmployee($empFullname, $empUsername, $empPassword, $empConfirmPassword, $empEmail, $empTel);
 
     // หากมีข้อผิดพลาด
     if (!empty($errorMessage)) {
         $_SESSION['error'] = $errorMessage;
-        header("Location: owner_show.php");
-        exit;
     } else {
 
         // ตรวจสอบชื่อผู้ใช้และอีเมลซ้ำกันในฐานข้อมูล
@@ -29,11 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         } else {
             // เพิ่มข้อมูลพนักงงานลงใน Database
             $result = $controllerEmployees->insertOwner($empFullname, $empUsername, $empPassword, $empEmail, $empTel);
-            $_SESSION["success"] = "เพิ่มข้อมูลสำเร็จ";
+            if ($result === true) {
+                $_SESSION["success"] = "เพิ่มข้อมูลสำเร็จ";
+            } else {
+                // ถ้ามี Error แสด Error ที่เก็บอยู่ใน $result 
+                $_SESSION["error"] = $result;
+            }
         }
 
-        //ส่ง Error OR Succrss และไปหน้า owner_show.php
-        header("Location: owner_show.php");
+        //ส่ง Error OR Success และไปหน้า owner_show.php
+        header($location);
         exit;
     }
 } else {

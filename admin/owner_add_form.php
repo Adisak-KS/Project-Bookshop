@@ -9,8 +9,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                    
                     <div class="mb-3">
                         <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>
@@ -31,7 +29,7 @@
                     <div class="mb-3">
                         <label for="emp_password" class="form-label">รหัสผ่าน<span class="text-danger">*</span></label>
                         <div class="input-group input-group-merge">
-                            <input type="password" class="form-control" name="emp_password" id="emp_password" placeholder="ระบุรหัสผ่าน 8 ตัวขึ้นไป" maxlength="20" required>
+                            <input type="password" class="form-control" name="emp_password" id="emp_password" placeholder="ระบุรหัสผ่าน 8 ตัวขึ้นไป" maxlength="16" required>
                             <div class="input-group-text" data-password="false">
                                 <span class="password-eye"></span>
                             </div>
@@ -43,7 +41,7 @@
                     <div class="mb-3">
                         <label for="emp_confirmPassword" class="form-label">ยืนยันรหัสผ่าน<span class="text-danger">*</span></label>
                         <div class="input-group input-group-merge">
-                            <input type="password" class="form-control" name="emp_confirmPassword" id="emp_confirmPassword" placeholder="ยืนยันรหัสผ่านอีกครั้ง" maxlength="30" required>
+                            <input type="password" class="form-control" name="emp_confirmPassword" id="emp_confirmPassword" placeholder="ยืนยันรหัสผ่านอีกครั้ง" maxlength="16" required>
                             <div class="input-group-text" data-password="false">
                                 <span class="password-eye"></span>
                             </div>
