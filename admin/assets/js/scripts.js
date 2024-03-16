@@ -97,7 +97,6 @@ function chkFormEmployeesInsert() {
 function chkFormEmployeesUpdate() {
     const empFullname = document.getElementById("emp_fullname").value;
     const empTel = document.getElementById("emp_tel").value;
-    // const empNewProfile = document.getElementById("emp_newProfile").value;
     const empNewProfile = document.getElementById("emp_newProfile").files[0];
 
     let errorMessage = "";
@@ -120,14 +119,15 @@ function chkFormEmployeesUpdate() {
 
     // เช็คไฟล์รูป
     if (empNewProfile) {
-        const fileSizeInBytes = empNewProfile.size;
-        const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
-        if (fileSizeInMB > 1) {
-            errorMessage += "ขนาดของไฟล์ภาพต้องไม่เกิน 1MB,\n";
-        }
         const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
         if (!allowedExtensions.test(empNewProfile.name)) {
             errorMessage += "รูปภาพต้องเป็นไฟล์ประเภท .jpg หรือ .png เท่านั้น\n";
+        } else {
+            const fileSizeInBytes = empNewProfile.size;
+            const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+            if (fileSizeInMB > 1) {
+                errorMessage += "ขนาดของไฟล์ภาพต้องไม่เกิน 1MB\n";
+            }
         }
     }
 

@@ -267,6 +267,7 @@ class controllerEmployees
         if (!in_array($fileMimeType, $allowedMimeTypes)) {
             $errorMessage = "รูปภาพต้องเป็นประเภท .png .jpg หรือ .jpeg เท่านั้น";
             return $errorMessage;
+
         }
 
         // ตรวจสอบขนาดของไฟล์

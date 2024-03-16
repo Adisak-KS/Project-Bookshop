@@ -1,12 +1,28 @@
 <?php
 require_once("../db/connect.php");
 
-if (isset($_GET['emp_id'])) {
-    $empId = $_GET['emp_id'];
-
+// รับค่าจาก owner_show
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // หากเข้ามาผ่านการส่งข้อมูลแบบ POST
+    $empId = $_POST["emp_id"];
+    $_SESSION["emp_id"] = $empId;
     $row = $controllerEmployees->getEmployeesDetail($empId);
-    // print_r($row);
+} elseif (isset($_SESSION['emp_id'])) {
+    // หากมีค่า emp_id ใน session
+    $empId =  $_SESSION["emp_id"];
+    $row = $controllerEmployees->getEmployeesDetail($empId);
+} else {
+    // หากมีการเข้าถึงหน้านี้ โดยวิธีไม่ปกติ
+    require_once("includes/alert/no_results_found.php");
+    exit;
 }
+
+// if (isset($_GET['id'])) {
+//     $empId = $_GET['id'];
+
+//     $row = $controllerEmployees->getEmployeesDetail($empId);
+//     // print_r($row);
+// }
 
 
 ?>
@@ -48,7 +64,7 @@ if (isset($_GET['emp_id'])) {
                                             <input type="text" class="form-control bg-light" name="emp_id" id="emp_id" value="<?php echo $row["emp_id"]; ?>" placeholder="รหัสของพนักงาน" required readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล :</label>
+                                            <label for="emp_fullname" class="form-label">ชื่อ - นามสกุล :</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control" name="emp_fullname" id="emp_fullname" value="<?php echo $row["emp_fullname"]; ?>" placeholder="ระบุชื่อ-นามสกุล เช่น เอ บีบี" maxlength="50" required>
                                             <div class="invalid-feedback">
                                                 <small>กรุณาระบุ ชื่อ - นามสกุล</small>
@@ -72,7 +88,7 @@ if (isset($_GET['emp_id'])) {
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="emp_tel" class="form-label">เบอร์โทรศัพท์ :</label>
+                                            <label for="emp_tel" class="form-label">เบอร์โทรศัพท์ :</label><span class="text-danger">*</span>
                                             <input type="tel" class="form-control" name="emp_tel" id="emp_tel" value="<?php echo $row["emp_tel"]; ?>" placeholder="ระบุเบอร์โทรศัพท์ เช่น 0876543210" maxlength="10" required>
                                             <div class="invalid-feedback">
                                                 <small>กรุณาระบุ เบอร์โทรศัพท์</small>
@@ -92,9 +108,9 @@ if (isset($_GET['emp_id'])) {
                                         <hr>
                                         <div class="mb-3">
                                             <img id="previewEmpProfile" src="uploads/profile_employees/<?php echo $row["emp_profile"]; ?>">
-                                            <input type="text" class="form-control" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" readonly>
+                                            <input type="hidden" class="form-control" name="emp_profile" value="<?php echo $row["emp_profile"]; ?>" readonly>
                                             <br>
-                                            <label for="emp_newProfile" class="form-label">รูปภาพผู้ใช้ใหม่ : </label>
+                                            <label for="emp_newProfile" class="form-label">รูปภาพผู้ใช้ใหม่ : </label><span class="text-danger">*</span>
                                             <input type="file" class="form-control" name="emp_newProfile" id="emp_newProfile" accept="image/png, image/jpeg" onchange="previewEmployeesProfile()">
                                         </div>
                                     </div>
@@ -104,7 +120,7 @@ if (isset($_GET['emp_id'])) {
                                     <div class="card-body">
                                         <h4 class="header-title">
                                             <i class="fa-solid fa-pen-to-square"></i>
-                                            <span>แก้ไขสถานะบัญชี</span>
+                                            <span>แก้ไขสถานะบัญชี</span><span class="text-danger">*</span>
                                         </h4>
                                         <hr>
                                         <div class="form-check">

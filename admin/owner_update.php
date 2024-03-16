@@ -9,11 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $empNewProfile = $_FILES["emp_newProfile"];
     $empStatus = $_POST["emp_status"];
 
+
+    // หน้าที่จะกลับ
+    $location = "Location: owner_update_form";
+
     // ตรวจสอบ Detail ข้อมูลของ Employee
     $errorMessage = $controllerEmployees->validateFormUpdateEmployee($empFullname, $empTel, $empId);
-    if (!isset($errorMessage)) {
+    if (!empty($errorMessage)) {
         $_SESSION['error'] = $errorMessage;
-        header("Location: owner_update_form?emp_id=$empId");
+        header($location);
         exit();
     } else {
         $controllerEmployees->updateEmployeesDetail($empFullname, $empTel, $empId);
@@ -27,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
         if (!empty($errorMessage)) {
             $_SESSION['error'] = $errorMessage;
-            header("Location: owner_update_form?emp_id=$empId");
+            header($location);
             exit();
         } else {
             $controllerEmployees->updateEmployeesProfile($empProfile, $empNewProfile, $empId);
@@ -44,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
 
     // ส่ง SESSION กลับไป
-    header("Location: owner_update_form?emp_id=$empId");
+    header($location);
 } else {
     // หากไม่ได้เข้ามาผ่านวิธีการ POST หรือไม่ได้กดปุ่ม submit
     require_once("includes/alert/no_results_found.php");

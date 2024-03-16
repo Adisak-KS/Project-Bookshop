@@ -88,10 +88,17 @@ $result = $controllerEmployees->getOwner();
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="owner_update_form?emp_id=<?php echo $row["emp_id"] ?>" class="btn btn-warning">
+                                                            <form action="owner_update_form" method="POST">
+                                                                <input type="hidden" name="emp_id" value="<?php echo $row["emp_id"]; ?>">
+                                                                <button type="submit" class="btn btn-warning">
+                                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                                    <span>แก้ไข</span>
+                                                                </button>
+                                                            </form>
+                                                                <!-- <a href="owner_update_form?id=<?php echo $row["emp_id"] ?>" class="btn btn-warning">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                                 <span>แก้ไข</span>
-                                                            </a>
+                                                            </a> -->
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
