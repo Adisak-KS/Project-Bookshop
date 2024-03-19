@@ -2,7 +2,7 @@
 require_once("../db/connect.php");
 
 // แสดงพนักงานที่มีสิทธิ์ Owner
-$result = $controllerEmployees->getAuthorityType();
+$result = $controllerEmployees->getEmployeesAuthorityType();
 // print_r($result); // ทดสอบ getOwner()
 ?>
 <!DOCTYPE html>
@@ -61,7 +61,7 @@ $result = $controllerEmployees->getAuthorityType();
                                                             ?>
                                                         </td>
                                                         <td>
-                                                            <form action="authority_type_update_form" method="POST">
+                                                            <form action="employees_authority_type_update_form" method="POST">
                                                                 <input type="hidden" name="emp_authority_type_id" value="<?php echo $row["emp_authority_type_id"]; ?>">
                                                                 <button type="submit" class="btn btn-warning">
                                                                     <i class="fa-solid fa-pen-to-square"></i>

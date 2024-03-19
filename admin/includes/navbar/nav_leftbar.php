@@ -84,7 +84,7 @@
 
                 <li class="menu-title mt-2">กำหนดสิทธิ์</li>
                 <li>
-                    <a href="authority_type_show.php">
+                    <a href="employees_authority_type_show">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="badge bg-success rounded-pill float-end">9+</span>
                         <span>สิทธิ์ในระบบ</span>

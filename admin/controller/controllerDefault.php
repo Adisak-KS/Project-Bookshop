@@ -71,12 +71,13 @@ class ControllerDefalut
     function checkSuperDefault()
     {
         try {
-            $sql = "SELECT COUNT(*) AS count FROM bs_employees_authority
+            $sql = "SELECT 1 FROM bs_employees_authority
                     WHERE emp_authority_type_id = 1
+                    LIMIT 1
                    ";
             $stmt = $this->db->query($sql);
             $stmt->execute();
-            $result = $stmt->fetch();
+            $result = $stmt->fetchColumn() !== false;
             return $result;
         } catch (PDOException $e) {
             return false;
@@ -89,7 +90,7 @@ class ControllerDefalut
         try {
             $check = $this->checkSuperDefault();
 
-            if ($check["count"] > 0) {
+            if ($check > 0) {
                 return false;
             } else {
                 // ข้อมูลเริ่มต้น
@@ -201,8 +202,8 @@ class ControllerDefalut
                 $empPassword = "Owner_1"; // รหัสผ่านไม่ได้ถูกเข้ารหัสด้วย password_hash() ตรงนี้
                 $empEmail = "adisak.general@gmail.com";
                 $empTel = "0935797491";
-                $empAuthorityType = 2;
-                $empAuthorityTyp2 = 6;
+                $empAuthorityType = 2; // สิทธิ์ Owner
+                $empAuthorityTyp2 = 6; // สิทธิ์ Employee
 
                 // Folder เก็บไฟล์
                 $uploadsDirectory = "uploads/profile_employees/";

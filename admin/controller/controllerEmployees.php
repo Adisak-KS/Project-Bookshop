@@ -86,22 +86,6 @@ class controllerEmployees
     }
 
     // ตรวจสอบ Usename และ Email ของ Employees
-    // function checkEmpUsernameExist($empUsername, $empEmail)
-    // {
-    //     try {
-    //         $sql = "SELECT COUNT(*) AS count FROM bs_employees
-    //                 WHERE emp_username = :emp_username OR emp_email = :emp_email
-    //                ";
-    //         $stmt = $this->db->prepare($sql);
-    //         $stmt->bindParam(':emp_username', $empUsername);
-    //         $stmt->bindParam(':emp_email', $empEmail);
-    //         $stmt->execute();
-    //         $result = $stmt->fetch();
-    //         return $result['count'];
-    //     } catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
     function checkEmpUsernameExist($empUsername, $empEmail)
     {
         try {
@@ -362,7 +346,7 @@ class controllerEmployees
     }
 
     // แสดงข้อมูลประเภทสิทธิ์ที่มีในระบบทั้งหมด
-    function getAuthorityType()
+    function getEmployeesAuthorityType()
     {
         try {
             $sql = "SELECT * FROM bs_employees_authority_type";
@@ -374,5 +358,64 @@ class controllerEmployees
             return false;
         }
     }
+
+    // แสดงข้อมูลรายละเอียดสิทธิ์ของพนักงาน
+    function getEmployeesAuthorityTypeDetail($empAuthorityTypeId)
+    {
+        try {
+            $sql = "SELECT * FROM bs_employees_authority_type
+                    WHERE emp_authority_type_id  = :emp_authority_type_id 
+                    ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":emp_authority_type_id", $empAuthorityTypeId);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+
+    function updateEmployeesAuthorityTypeDetail($empAuthorityTypeDetail, $empAuthorityTypeId)
+    {
+        try {
+            $sql = "UPDATE bs_employees_authority_type
+                    SET emp_authority_type_detail = :emp_authority_type_detail,
+                        emp_authority_type_uptime = NOW()
+                    WHERE emp_authority_type_id = :emp_authority_type_id
+                   ";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":emp_authority_type_detail", $empAuthorityTypeDetail);
+            $stmt->bindParam(":emp_authority_type_id", $empAuthorityTypeId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    function updateEmployeesAuthorityTypeStatus($empAuthorityTypeStatus, $empAuthorityTypeId)
+    {
+        try {
+            $sql = "UPDATE bs_employees_authority_type
+                    SET emp_authority_type_status = :emp_authority_type_status,
+                        emp_authority_type_uptime = NOW()
+                    WHERE emp_authority_type_id = :emp_authority_type_id
+                   ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam("emp_authority_type_status", $empAuthorityTypeStatus);
+            $stmt->bindParam("emp_authority_type_id", $empAuthorityTypeId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }
+
 ?>
